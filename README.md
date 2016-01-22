@@ -1,5 +1,14 @@
 # Absorb LMS API Wrapper
 
+"Absorb LMS is a powerful, flexible, and visually stunning software platform teamed with expert implementation and support to help you build the training programs your business needs. Whether your old LMS is slowing you down or you’ve outgrown your current training model, Absorb can help.
+"
+
+All the available REST routes can be found [here](https://myabsorb.com/api/rest/v1/Help).
+
+## Table of Contents
+1. [Installation](#installation)
+2. [Configuration](#configuration)
+3. [User](#user)
 
 ## Installation
 
@@ -17,9 +26,7 @@ Or install it yourself as:
 
     $ gem install absorb_api
 
-## Usage
-
-To configure:
+### Configuration
 ```ruby
 AbsorbApi.configure do |c|
   c.absorbuser = absorb_username
@@ -29,6 +36,45 @@ AbsorbApi.configure do |c|
   c.ignored_course_ids = [course_ids_to_ignore]
   c.ignored_lesson_types = [lesson_types_to_ignore]
 end
+```
+
+### User
+Return a collection of all available users:
+```ruby
+AbsorbApi::User.all
+```
+
+Find a particular `User`:
+```ruby
+AbsorbApi::User.find(id)
+```
+
+When searching for users, you can filter by **email**, **username**, **modifiedSince**, and **externalId**:
+```ruby
+AbsorbApi::User.where(params)
+```
+
+Create a new user in Absorb LMS:
+```ruby
+AbsorbApi::User.create(department_id: DepartmentId, first_name: FirstName, last_name: LastName, user_name: UserName, email_address: EmailAddress, password: Password)
+```
+
+Returns a collection of courses available for enrollment for the user:
+```ruby
+user = AbsorbApi::User.find(1)
+available_courses = user.courses
+```
+
+Returns a collection of the enrollments for the user:
+```ruby
+user = AbsorbApi::User.find(1)
+available_enrollments = user.enrollments
+```
+
+Returns a collection of courses available per user given a collection of users:
+```ruby
+users = AbsorbApi::User.all
+courses = AbsorbApi::User.courses_from_collection(users)
 ```
 
 ## Development

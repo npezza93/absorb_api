@@ -26,18 +26,11 @@ module AbsorbApi
     end
 
     # department_id, first_name, last_name, user_name, email_address, password are required
-    def self.create(params)
-      if params.has_key?(:first_name) && params.has_key?(:last_name) && params.has_key?(:user_name) && params.has_key?(:email_address) && params.has_key?(:department_id)
-        params.keys.each do |key|
-          params[(key.to_s.camelize rescue key) || key] = params.delete(key)
-        end
-
-        api.post("users", params).body
-      else
-        return "ERROR: department_id, first_name, last_name, user_name, email_address, password are required"
-      end
+    def self.create(department_id:, first_name:, last_name:, user_name:, email_address:, password:)
+      api.post("users", params).body
     end
 
+    alias_method :catalog, :courses
     def courses
       api.get("users/#{self.id}/courses").body.map! do |course_attrs|
         Course.new(course_attrs)
