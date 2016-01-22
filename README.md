@@ -9,6 +9,7 @@ All the available REST routes can be found [here](https://myabsorb.com/api/rest/
 1. [Installation](#installation)
 2. [Configuration](#configuration)
 3. [User](#user)
+4. [Category](#category)
 
 ## Installation
 
@@ -75,6 +76,17 @@ Returns a collection of courses available per user given a collection of users:
 ```ruby
 users = AbsorbApi::User.all
 courses = AbsorbApi::User.courses_from_collection(users)
+```
+
+### Category
+Return a collection of all available categories:
+```ruby
+AbsorbApi::Category.all
+```
+
+Find a particular `Category`:
+```ruby
+AbsorbApi::Category.find(id)
 ```
 
 ## Development

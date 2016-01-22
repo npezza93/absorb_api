@@ -13,5 +13,9 @@ module AbsorbApi
         Category.new(category_attrs)
       end
     end
+
+    def self.find(id)
+      Category.new(api.get("categories/#{id}").body)
+    end
   end
 end

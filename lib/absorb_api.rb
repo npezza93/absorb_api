@@ -5,6 +5,7 @@ require "absorb_api/user"
 require "absorb_api/course"
 require "absorb_api/course_enrollment"
 require "absorb_api/lesson_enrollment"
+require "absorb_api/category"
 
 require 'faraday'
 require 'typhoeus/adapters/faraday'

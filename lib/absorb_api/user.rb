@@ -30,12 +30,12 @@ module AbsorbApi
       api.post("users", params).body
     end
 
-    alias_method :catalog, :courses
     def courses
       api.get("users/#{self.id}/courses").body.map! do |course_attrs|
         Course.new(course_attrs)
       end
     end
+    alias_method :catalog, :courses
 
     def enrollments(params = nil)
       api.get("users/#{self.id}/enrollments", params).body.map! do |enrollment_attrs|
