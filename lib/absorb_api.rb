@@ -171,12 +171,4 @@ module AbsorbApi
       end
     end
   end
-
-  def self.gather_enrollments
-    @enrollments ||= Course.enrollments_from_collection(Course.all)
-  end
-
-  def self.gather_lessons(modifiedSince)
-    @lessons ||= CourseEnrollment.lessons_from_collection(AbsorbApi.gather_enrollments, modifiedSince)
-  end
 end
