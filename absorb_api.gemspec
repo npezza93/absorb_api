@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "API wrapper for Absorb LMS"
   spec.description   = "API wrapper for Absorb LMS"
-  spec.homepage      = "http://www.google.com"
+  spec.homepage      = "https://github.com/npezza93/absorb_api"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
