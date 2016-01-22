@@ -340,7 +340,7 @@
         <div class="method-description">
           
           <p>gets all associated lessons given a collection of enrollments all calls are
-called in parallel enrollments are chunked in groups of 100 to keep
+called in parallel enrollments are chunked in groups of 105 to keep
 typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
           
           
@@ -351,7 +351,7 @@ typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">lessons_from_collection</span>(<span class="ruby-identifier">course_enrollments</span>, <span class="ruby-identifier">modifiedSince</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">modifiedSince</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">DateTime</span>
     <span class="ruby-identifier">lessons</span> = []
-    <span class="ruby-identifier">course_enrollments</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">100</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment_slice</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">course_enrollments</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">105</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment_slice</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
         <span class="ruby-identifier">enrollment_slice</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment</span><span class="ruby-operator">|</span>
           <span class="ruby-identifier">lessons</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{enrollment.user_id}/enrollments/#{enrollment.course_id}/lessons&quot;</span>, { <span class="ruby-string">&quot;modifiedSince&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">modifiedSince</span>.<span class="ruby-identifier">to_s</span>})

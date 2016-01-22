@@ -606,7 +606,7 @@
         <div class="method-description">
           
           <p>gets all associated courses given a collection of users all calls are
-called in parallel users are chunked in groups of 100 to keep typhoeus from
+called in parallel users are chunked in groups of 105 to keep typhoeus from
 getting bogged down</p>
           
           
@@ -616,7 +616,7 @@ getting bogged down</p>
             <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 56</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">courses_from_collection</span>(<span class="ruby-identifier">users</span>)
   <span class="ruby-identifier">courses</span> = []
-  <span class="ruby-identifier">users</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">100</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user_slice</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">users</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">105</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user_slice</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
       <span class="ruby-identifier">user_slice</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">courses</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{user.id}/courses&quot;</span>)
