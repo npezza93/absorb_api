@@ -52,10 +52,10 @@ module AbsorbApi
 
     # gets all associated courses given a collection of users
     # all calls are called in parallel
-    # users are chunked in groups of 100 to keep typhoeus from getting bogged down
+    # users are chunked in groups of 105 to keep typhoeus from getting bogged down
     def self.courses_from_collection(users)
       courses = []
-      users.each_slice(100) do |user_slice|
+      users.each_slice(105) do |user_slice|
         api.in_parallel do
           user_slice.each do |user|
             courses << api.get("users/#{user.id}/courses")

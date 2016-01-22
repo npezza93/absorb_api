@@ -17,12 +17,12 @@ module AbsorbApi
 
     # gets all associated lessons given a collection of enrollments
     # all calls are called in parallel
-    # enrollments are chunked in groups of 100 to keep typhoeus from getting bogged down
+    # enrollments are chunked in groups of 105 to keep typhoeus from getting bogged down
     # modifiedSince must be a DateTime object
     def self.lessons_from_collection(course_enrollments, modifiedSince)
       if modifiedSince.is_a? DateTime
         lessons = []
-        course_enrollments.each_slice(100) do |enrollment_slice|
+        course_enrollments.each_slice(105) do |enrollment_slice|
           api.in_parallel do
             enrollment_slice.each do |enrollment|
               lessons << api.get("users/#{enrollment.user_id}/enrollments/#{enrollment.course_id}/lessons", { "modifiedSince" => modifiedSince.to_s})
