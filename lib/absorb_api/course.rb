@@ -15,8 +15,8 @@ module AbsorbApi
     end
 
     # available filters modifiedSince, externalId
-    def self.where(params)
-      api.get("courses", params).body.map! do |course_attrs|
+    def self.where(modified_since: nil, external_id: nil)
+      api.get("courses", {"modifiedSince" => :modified_since, "externalId" => :external_id }).body.map! do |course_attrs|
         Course.new(course_attrs)
       end
     end
@@ -25,9 +25,15 @@ module AbsorbApi
       Course.new(api.get("courses/#{id}").body)
     end
 
-    def enrollments(params = nil)
-      api.get("courses/#{self.id}/enrollments", params).body.map! do |enrollment_attrs|
+    def enrollments(status: nil, modified_since: nil)
+      api.get("courses/#{self.id}/enrollments", { status: :status, modifiedSince: :modified_since }).body.map! do |enrollment_attrs|
         CourseEnrollment.new(enrollment_attrs)
+      end
+    end
+
+    def certificates(include_expired: nil, acquired_date: nil, expiry_date: nil)
+      api.get("courses/#{self.id}/enrollments", { includeExpired: :include_expired, acquiredDate: :acquired_date,  expiryDate: :expiry_date}).body.map! do |certificate_attrs|
+        Certificate.new(certificate_attrs)
       end
     end
 

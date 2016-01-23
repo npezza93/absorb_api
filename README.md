@@ -9,7 +9,9 @@ All the available REST routes can be found [here](https://myabsorb.com/api/rest/
 1. [Installation](#installation)
 2. [Configuration](#configuration)
 3. [User](#user)
-4. [Category](#category)
+4. [Course](#course)
+5. [Category](#category)
+6. [Certificate](#certificate)
 
 ## Installation
 
@@ -40,12 +42,12 @@ end
 ```
 
 ### User
-Return a collection of all available users:
+To return a collection of all available users:
 ```ruby
 AbsorbApi::User.all
 ```
 
-Find a particular `User`:
+To find a single `User` by id:
 ```ruby
 AbsorbApi::User.find(id)
 ```
@@ -55,38 +57,91 @@ When searching for users, you can filter by **email**, **username**, **modifiedS
 AbsorbApi::User.where(params)
 ```
 
-Create a new user in Absorb LMS:
+To create a new user in Absorb LMS:
 ```ruby
 AbsorbApi::User.create(department_id: DepartmentId, first_name: FirstName, last_name: LastName, user_name: UserName, email_address: EmailAddress, password: Password)
 ```
 
-Returns a collection of courses available for enrollment for the user:
+To return a collection of courses available for enrollment for a specific user:
 ```ruby
 user = AbsorbApi::User.find(1)
 available_courses = user.courses
 ```
 
-Returns a collection of the enrollments for the user:
+To returns a collection of the enrollments for a specific user:
 ```ruby
 user = AbsorbApi::User.find(1)
 available_enrollments = user.enrollments
 ```
 
-Returns a collection of courses available per user given a collection of users:
+To return a collection of certificates awarded to a specific user:
+```ruby
+user = AbsorbApi::User.find(1)
+user_certificates = user.certificates
+```
+
+To return a certificates awarded to a specific user:
+```ruby
+user = AbsorbApi::User.find(1)
+user_certificate = user.find_certificate(id)
+```
+
+To return a collection of courses available per user given a collection of users:
 ```ruby
 users = AbsorbApi::User.all
 courses = AbsorbApi::User.courses_from_collection(users)
 ```
 
+### Course
+To return a collection of all available courses:
+```ruby
+AbsorbApi::Course.all
+```
+
+To find a single `Course` by id:
+```ruby
+AbsorbApi::Course.find(id)
+```
+
+When searching for courses, you can filter by **modifiedSince**, and **externalId**:
+```ruby
+AbsorbApi::Course.where(modified_since: modifiedSince, external_id: externalId)
+```
+
+To return a collection of enrollments for a specific course:
+```ruby
+# available filters include status and modified_since
+course = AbsorbApi::Course.find(1)
+course_enrollments = course.enrollments
+```
+
+To return a collection of certificates for a specific course:
+```ruby
+# available filters include include_expired, acquired_date, and expiry_date
+course = AbsorbApi::Course.find(1)
+course_certificates = course.certificates
+```
+
+To return a collection of associated enrollments given a collection of courses
+```ruby
+AbsorbApi::Course.enrollments_from_collection(AbsorbApi::Course.all)
+```
+
 ### Category
-Return a collection of all available categories:
+To return a collection of all available categories:
 ```ruby
 AbsorbApi::Category.all
 ```
 
-Find a particular `Category`:
+To find a single `Category` by id:
 ```ruby
 AbsorbApi::Category.find(id)
+```
+
+### Certificate
+To find a single `Certificate` by id:
+```ruby
+AbsorbApi::Certificate.find(id)
 ```
 
 ## Development

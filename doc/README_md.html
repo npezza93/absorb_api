@@ -56,8 +56,13 @@
 
   <ul class="link-list" role="directory">
     <li><a href="#label-Absorb+LMS+API+Wrapper">Absorb LMS API Wrapper</a>
+    <li><a href="#label-Table+of+Contents">Table of Contents</a>
     <li><a href="#label-Installation">Installation</a>
-    <li><a href="#label-Usage">Usage</a>
+    <li><a href="#label-Configuration">Configuration</a>
+    <li><a href="#label-User">User</a>
+    <li><a href="#label-Course">Course</a>
+    <li><a href="#label-Category">Category</a>
+    <li><a href="#label-Certificate">Certificate</a>
     <li><a href="#label-Development">Development</a>
     <li><a href="#label-Contributing">Contributing</a>
     <li><a href="#label-License">License</a>
@@ -95,6 +100,29 @@
 
 <h1 id="label-Absorb+LMS+API+Wrapper">Absorb LMS API Wrapper<span><a href="#label-Absorb+LMS+API+Wrapper">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
+<p>“Absorb LMS is a powerful, flexible, and visually stunning software
+platform teamed with expert implementation and support to help you build
+the training programs your business needs. Whether your old LMS is slowing
+you down or you’ve outgrown your current training model, Absorb can help. ”</p>
+
+<p>All the available REST routes can be found <a
+href="https://myabsorb.com/api/rest/v1/Help">here</a>.</p>
+
+<h2 id="label-Table+of+Contents">Table of Contents<span><a href="#label-Table+of+Contents">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ol><li>
+<p><a href="#installation">Installation</a></p>
+</li><li>
+<p><a href="#configuration">Configuration</a></p>
+</li><li>
+<p><a href="#user">User</a></p>
+</li><li>
+<p><a href="#course">Course</a></p>
+</li><li>
+<p><a href="#category">Category</a></p>
+</li><li>
+<p><a href="#certificate">Certificate</a></p>
+</li></ol>
+
 <h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
 <p>Add this line to your application&#39;s Gemfile:</p>
@@ -110,13 +138,95 @@
 
 <pre>$ gem install absorb_api</pre>
 
-<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<h3 id="label-Configuration">Configuration<span><a href="#label-Configuration">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>To configure: <code>ruby AbsorbApi.configure do |c|   c.absorbuser =
-absorb_username   c.absorbpass = absorb_password   c.absorbkey =
-absorb_privatekey   c.url = absorb_url   c.ignored_course_ids =
-[course_ids_to_ignore]   c.ignored_lesson_types = [lesson_types_to_ignore]
-end </code></p>
+<pre class="ruby"><span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">absorbuser</span> = <span class="ruby-identifier">absorb_username</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">absorbpass</span> = <span class="ruby-identifier">absorb_password</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">absorbkey</span> = <span class="ruby-identifier">absorb_privatekey</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">url</span> = <span class="ruby-identifier">absorb_url</span>
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">ignored_course_ids</span> = [<span class="ruby-identifier">course_ids_to_ignore</span>]
+  <span class="ruby-identifier">c</span>.<span class="ruby-identifier">ignored_lesson_types</span> = [<span class="ruby-identifier">lesson_types_to_ignore</span>]
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h3 id="label-User">User<span><a href="#label-User">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>To return a collection of all available users: <code>ruby
+AbsorbApi::User.all </code></p>
+
+<p>To find a single <code>User</code> by id: <code>ruby
+AbsorbApi::User.find(id) </code></p>
+
+<p>When searching for users, you can filter by <strong>email</strong>,
+<strong>username</strong>, <strong>modifiedSince</strong>, and
+<strong>externalId</strong>: <code>ruby AbsorbApi::User.where(params)
+</code></p>
+
+<p>To create a new user in Absorb LMS: <code>ruby
+AbsorbApi::User.create(department_id: DepartmentId, first_name: FirstName,
+last_name: LastName, user_name: UserName, email_address: EmailAddress,
+password: Password) </code></p>
+
+<p>To return a collection of courses available for enrollment for a specific
+user: <code>ruby user = AbsorbApi::User.find(1) available_courses =
+user.courses </code></p>
+
+<p>To returns a collection of the enrollments for a specific user: <code>ruby
+user = AbsorbApi::User.find(1) available_enrollments = user.enrollments
+</code></p>
+
+<p>To return a collection of certificates awarded to a specific user:
+<code>ruby user = AbsorbApi::User.find(1) user_certificates =
+user.certificates </code></p>
+
+<p>To return a certificates awarded to a specific user: <code>ruby user =
+AbsorbApi::User.find(1) user_certificate = user.find_certificate(id)
+</code></p>
+
+<p>To return a collection of courses available per user given a collection of
+users: <code>ruby users = AbsorbApi::User.all courses =
+AbsorbApi::User.courses_from_collection(users) </code></p>
+
+<h3 id="label-Course">Course<span><a href="#label-Course">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>To return a collection of all available courses: <code>ruby
+AbsorbApi::Course.all </code></p>
+
+<p>To find a single <code>Course</code> by id: <code>ruby
+AbsorbApi::Course.find(id) </code></p>
+
+<p>When searching for courses, you can filter by
+<strong>modifiedSince</strong>, and <strong>externalId</strong>: <code>ruby
+AbsorbApi::Course.where(modified_since: modifiedSince, external_id:
+externalId) </code></p>
+
+<p>To return a collection of enrollments for a specific course: <code>ruby #
+available filters include status and modified_since course =
+AbsorbApi::Course.find(1) course_enrollments = course.enrollments </code></p>
+
+<p>To return a collection of certificates for a specific course: <code>ruby #
+available filters include include_expired, acquired_date, and expiry_date
+course = AbsorbApi::Course.find(1) course_certificates =
+course.certificates </code></p>
+
+<p>To return a collection of associated enrollments given a collection of
+courses <code>ruby
+AbsorbApi::Course.enrollments_from_collection(AbsorbApi::Course.all)
+</code></p>
+
+<h3 id="label-Category">Category<span><a href="#label-Category">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>To return a collection of all available categories: <code>ruby
+AbsorbApi::Category.all </code></p>
+
+<p>To find a single <code>Category</code> by id: <code>ruby
+AbsorbApi::Category.find(id) </code></p>
+
+<h3 id="label-Certificate">Certificate<span><a href="#label-Certificate">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<p>To find a single <code>Certificate</code> by id: <code>ruby
+AbsorbApi::Certificate.find(id) </code></p>
 
 <h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#top">&uarr;</a></span></h2>
 

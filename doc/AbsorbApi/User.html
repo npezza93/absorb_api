@@ -82,9 +82,15 @@
     
     <li ><a href="#method-c-where">::where</a>
     
+    <li ><a href="#method-i-catalog">#catalog</a>
+    
+    <li ><a href="#method-i-certificates">#certificates</a>
+    
     <li ><a href="#method-i-courses">#courses</a>
     
     <li ><a href="#method-i-enrollments">#enrollments</a>
+    
+    <li ><a href="#method-i-find_certificate">#find_certificate</a>
     
   </ul>
 </div>
@@ -613,7 +619,7 @@ getting bogged down</p>
 
           
           <div class="method-source-code" id="courses_from_collection-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 56</span>
+            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 59</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">courses_from_collection</span>(<span class="ruby-identifier">users</span>)
   <span class="ruby-identifier">courses</span> = []
   <span class="ruby-identifier">users</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">105</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user_slice</span><span class="ruby-operator">|</span>
@@ -639,7 +645,7 @@ getting bogged down</p>
         
         <div class="method-heading">
           <span class="method-name">create</span><span
-            class="method-args">(params)</span>
+            class="method-args">(department_id:, first_name:, last_name:, user_name:, email_address:, password:)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -659,16 +665,8 @@ required</p>
           
           <div class="method-source-code" id="create-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 29</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">params</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:first_name</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:last_name</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:user_name</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:email_address</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-value">:department_id</span>)
-    <span class="ruby-identifier">params</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">params</span>[(<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">camelize</span> <span class="ruby-keyword">rescue</span> <span class="ruby-identifier">key</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">key</span>] = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">key</span>)
-    <span class="ruby-keyword">end</span>
-
-    <span class="ruby-identifier">api</span>.<span class="ruby-identifier">post</span>(<span class="ruby-string">&quot;users&quot;</span>, <span class="ruby-identifier">params</span>).<span class="ruby-identifier">body</span>
-  <span class="ruby-keyword">else</span>
-    <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;ERROR: department_id, first_name, last_name, user_name, email_address, password are required&quot;</span>
-  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">department_id</span>,, <span class="ruby-identifier">first_name</span>,, <span class="ruby-identifier">last_name</span>,, <span class="ruby-identifier">user_name</span>,, <span class="ruby-identifier">email_address</span>,, <span class="ruby-identifier">password</span>))
+  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">post</span>(<span class="ruby-string">&quot;users&quot;</span>, <span class="ruby-identifier">params</span>).<span class="ruby-identifier">body</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -791,6 +789,69 @@ required</p>
        </header>
 
     
+      <div id="method-i-catalog" class="method-detail method-alias">
+        
+        <div class="method-heading">
+          <span class="method-name">catalog</span><span
+            class="method-args">()</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+        </div>
+
+        
+
+        
+        <div class="aliases">
+          Alias for: <a href="User.html#method-i-courses">courses</a>
+        </div>
+        
+      </div>
+
+    
+      <div id="method-i-certificates" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">certificates</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="certificates-source">
+            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">certificates</span>
+  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{self.id}/certificates&quot;</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">certificate_attrs</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">certificate_attrs</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-courses" class="method-detail ">
         
         <div class="method-heading">
@@ -810,7 +871,7 @@ required</p>
 
           
           <div class="method-source-code" id="courses-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 41</span>
+            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">courses</span>
   <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{self.id}/courses&quot;</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course_attrs</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">Course</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">course_attrs</span>)
@@ -820,6 +881,10 @@ required</p>
           
         </div>
 
+        
+        <div class="aliases">
+          Also aliased as: <a href="User.html#method-i-catalog">catalog</a>
+        </div>
         
 
         
@@ -845,11 +910,44 @@ required</p>
 
           
           <div class="method-source-code" id="enrollments-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 47</span>
+            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">enrollments</span>(<span class="ruby-identifier">params</span> = <span class="ruby-keyword">nil</span>)
   <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{self.id}/enrollments&quot;</span>, <span class="ruby-identifier">params</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment_attrs</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">CourseEnrollment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">enrollment_attrs</span>)
   <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-find_certificate" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_certificate</span><span
+            class="method-args">(id)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_certificate-source">
+            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 52</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">find_certificate</span>(<span class="ruby-identifier">id</span>)
+  <span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{self.id}/certificates/#{id}&quot;</span>).<span class="ruby-identifier">body</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           

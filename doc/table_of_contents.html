@@ -38,8 +38,13 @@
 
     <ul>
       <li><a href="README_md.html#label-Absorb+LMS+API+Wrapper">Absorb LMS API Wrapper</a>
+      <li><a href="README_md.html#label-Table+of+Contents">Table of Contents</a>
       <li><a href="README_md.html#label-Installation">Installation</a>
-      <li><a href="README_md.html#label-Usage">Usage</a>
+      <li><a href="README_md.html#label-Configuration">Configuration</a>
+      <li><a href="README_md.html#label-User">User</a>
+      <li><a href="README_md.html#label-Course">Course</a>
+      <li><a href="README_md.html#label-Category">Category</a>
+      <li><a href="README_md.html#label-Certificate">Certificate</a>
       <li><a href="README_md.html#label-Development">Development</a>
       <li><a href="README_md.html#label-Contributing">Contributing</a>
       <li><a href="README_md.html#label-License">License</a>
@@ -66,6 +71,12 @@
     <a href="AbsorbApi/Base.html">AbsorbApi::Base</a>
   </li>
   <li class="class">
+    <a href="AbsorbApi/Category.html">AbsorbApi::Category</a>
+  </li>
+  <li class="class">
+    <a href="AbsorbApi/Certificate.html">AbsorbApi::Certificate</a>
+  </li>
+  <li class="class">
     <a href="AbsorbApi/Configuration.html">AbsorbApi::Configuration</a>
   </li>
   <li class="class">
@@ -89,6 +100,11 @@
     <a href="AbsorbApi/Course.html#method-c-all">::all</a>
     &mdash;
     <span class="container">AbsorbApi::Course</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Category.html#method-c-all">::all</a>
+    &mdash;
+    <span class="container">AbsorbApi::Category</span>
 
   <li class="method">
     <a href="AbsorbApi/User.html#method-c-all">::all</a>
@@ -131,9 +147,19 @@
     <span class="container">AbsorbApi::Course</span>
 
   <li class="method">
+    <a href="AbsorbApi/Certificate.html#method-c-find">::find</a>
+    &mdash;
+    <span class="container">AbsorbApi::Certificate</span>
+
+  <li class="method">
     <a href="AbsorbApi/User.html#method-c-find">::find</a>
     &mdash;
     <span class="container">AbsorbApi::User</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Category.html#method-c-find">::find</a>
+    &mdash;
+    <span class="container">AbsorbApi::Category</span>
 
   <li class="method">
     <a href="AbsorbApi/CourseEnrollment.html#method-c-lessons_from_collection">::lessons_from_collection</a>
@@ -141,14 +167,9 @@
     <span class="container">AbsorbApi::CourseEnrollment</span>
 
   <li class="method">
-    <a href="AbsorbApi/Course.html#method-c-new">::new</a>
+    <a href="AbsorbApi/Category.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">AbsorbApi::Course</span>
-
-  <li class="method">
-    <a href="AbsorbApi/User.html#method-c-new">::new</a>
-    &mdash;
-    <span class="container">AbsorbApi::User</span>
+    <span class="container">AbsorbApi::Category</span>
 
   <li class="method">
     <a href="AbsorbApi/CourseEnrollment.html#method-c-new">::new</a>
@@ -161,14 +182,19 @@
     <span class="container">AbsorbApi::LessonEnrollment</span>
 
   <li class="method">
+    <a href="AbsorbApi/User.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">AbsorbApi::User</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Course.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">AbsorbApi::Course</span>
+
+  <li class="method">
     <a href="AbsorbApi.html#method-c-reset">::reset</a>
     &mdash;
     <span class="container">AbsorbApi</span>
-
-  <li class="method">
-    <a href="AbsorbApi/User.html#method-c-where">::where</a>
-    &mdash;
-    <span class="container">AbsorbApi::User</span>
 
   <li class="method">
     <a href="AbsorbApi/Course.html#method-c-where">::where</a>
@@ -176,7 +202,32 @@
     <span class="container">AbsorbApi::Course</span>
 
   <li class="method">
+    <a href="AbsorbApi/User.html#method-c-where">::where</a>
+    &mdash;
+    <span class="container">AbsorbApi::User</span>
+
+  <li class="method">
+    <a href="AbsorbApi/User.html#method-i-catalog">#catalog</a>
+    &mdash;
+    <span class="container">AbsorbApi::User</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Course.html#method-i-certificates">#certificates</a>
+    &mdash;
+    <span class="container">AbsorbApi::Course</span>
+
+  <li class="method">
+    <a href="AbsorbApi/User.html#method-i-certificates">#certificates</a>
+    &mdash;
+    <span class="container">AbsorbApi::User</span>
+
+  <li class="method">
     <a href="AbsorbApi/User.html#method-i-courses">#courses</a>
+    &mdash;
+    <span class="container">AbsorbApi::User</span>
+
+  <li class="method">
+    <a href="AbsorbApi/User.html#method-i-enrollments">#enrollments</a>
     &mdash;
     <span class="container">AbsorbApi::User</span>
 
@@ -186,7 +237,7 @@
     <span class="container">AbsorbApi::Course</span>
 
   <li class="method">
-    <a href="AbsorbApi/User.html#method-i-enrollments">#enrollments</a>
+    <a href="AbsorbApi/User.html#method-i-find_certificate">#find_certificate</a>
     &mdash;
     <span class="container">AbsorbApi::User</span>
 

@@ -80,6 +80,8 @@
     
     <li ><a href="#method-c-where">::where</a>
     
+    <li ><a href="#method-i-certificates">#certificates</a>
+    
     <li ><a href="#method-i-enrollments">#enrollments</a>
     
   </ul>
@@ -530,7 +532,7 @@ called in parallel</p>
 
           
           <div class="method-source-code" id="enrollments_from_collection-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 36</span>
+            <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 42</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">enrollments_from_collection</span>(<span class="ruby-identifier">courses</span>)
   <span class="ruby-identifier">enrollments</span> = []
   <span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
@@ -622,7 +624,7 @@ called in parallel</p>
         
         <div class="method-heading">
           <span class="method-name">where</span><span
-            class="method-args">(params)</span>
+            class="method-args">(modified_since: nil, external_id: nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -638,8 +640,8 @@ called in parallel</p>
           
           <div class="method-source-code" id="where-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 18</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">params</span>)
-  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&quot;courses&quot;</span>, <span class="ruby-identifier">params</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course_attrs</span><span class="ruby-operator">|</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">modified_since</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">external_id</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&quot;courses&quot;</span>, {<span class="ruby-string">&quot;modifiedSince&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:modified_since</span>, <span class="ruby-string">&quot;externalId&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:external_id</span> }).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course_attrs</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">Course</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">course_attrs</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -661,11 +663,46 @@ called in parallel</p>
        </header>
 
     
+      <div id="method-i-certificates" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">certificates</span><span
+            class="method-args">(include_expired: nil, acquired_date: nil, expiry_date: nil)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="certificates-source">
+            <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 34</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">certificates</span>(<span class="ruby-identifier">include_expired</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">acquired_date</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">expiry_date</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;courses/#{self.id}/enrollments&quot;</span>, { <span class="ruby-identifier">includeExpired</span><span class="ruby-operator">:</span> <span class="ruby-value">:include_expired</span>, <span class="ruby-identifier">acquiredDate</span><span class="ruby-operator">:</span> <span class="ruby-value">:acquired_date</span>,  <span class="ruby-identifier">expiryDate</span><span class="ruby-operator">:</span> <span class="ruby-value">:expiry_date</span>}).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">certificate_attrs</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">certificate_attrs</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
       <div id="method-i-enrollments" class="method-detail ">
         
         <div class="method-heading">
           <span class="method-name">enrollments</span><span
-            class="method-args">(params = nil)</span>
+            class="method-args">(status: nil, modified_since: nil)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -681,8 +718,8 @@ called in parallel</p>
           
           <div class="method-source-code" id="enrollments-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 28</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">enrollments</span>(<span class="ruby-identifier">params</span> = <span class="ruby-keyword">nil</span>)
-  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;courses/#{self.id}/enrollments&quot;</span>, <span class="ruby-identifier">params</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment_attrs</span><span class="ruby-operator">|</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">enrollments</span>(<span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">modified_since</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
+  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;courses/#{self.id}/enrollments&quot;</span>, { <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">:status</span>, <span class="ruby-identifier">modifiedSince</span><span class="ruby-operator">:</span> <span class="ruby-value">:modified_since</span> }).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment_attrs</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">CourseEnrollment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">enrollment_attrs</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>

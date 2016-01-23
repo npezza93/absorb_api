@@ -43,6 +43,16 @@ module AbsorbApi
       end
     end
 
+    def certificates
+      api.get("users/#{self.id}/certificates").body.map! do |certificate_attrs|
+        Certificate.new(certificate_attrs)
+      end
+    end
+
+    def find_certificate(id)
+      Certificate.new(api.get("users/#{self.id}/certificates/#{id}").body)
+    end
+
     # gets all associated courses given a collection of users
     # all calls are called in parallel
     # users are chunked in groups of 105 to keep typhoeus from getting bogged down
