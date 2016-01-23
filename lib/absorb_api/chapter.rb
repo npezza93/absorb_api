@@ -1,6 +1,6 @@
 module AbsorbApi
   class Chapter < Base
-    attr_reader :id, :name, :lesson_ids
+    attr_accessor :id, :name, :lesson_ids
 
     def initialize(attributes, &block)
       attributes.each do |k,v|

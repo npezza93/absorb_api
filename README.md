@@ -5,6 +5,7 @@
 
 All the available REST routes can be found [here](https://myabsorb.com/api/rest/v1/Help).
 
+Full documentation can be found at [http://npezza93.github.io/absorb_api/](http://npezza93.github.io/absorb_api/)
 ## Table of Contents
 1. [Installation](#installation)
 2. [Configuration](#configuration)

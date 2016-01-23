@@ -1,6 +1,6 @@
 module AbsorbApi
   class Certificate < Base
-    attr_reader :id, :enrollment_id, :full_name, :course_name, :acquired_date, :expiry_date, :notes
+    attr_accessor :id, :enrollment_id, :full_name, :course_name, :acquired_date, :expiry_date, :notes
 
     def initialize(attributes)
       attributes.each do |k,v|
