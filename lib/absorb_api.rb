@@ -7,6 +7,7 @@ require "absorb_api/course_enrollment"
 require "absorb_api/lesson_enrollment"
 require "absorb_api/category"
 require "absorb_api/certificate"
+require "absorb_api/chapter"
 
 require 'faraday'
 require 'typhoeus/adapters/faraday'

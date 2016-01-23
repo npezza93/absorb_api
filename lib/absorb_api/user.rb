@@ -2,8 +2,8 @@ module AbsorbApi
   class User < Base
     attr_reader :id, :department_id, :first_name, :middle_name, :last_name, :username, :password, :email_address, :cc_email_addresses, :language_id, :gender, :address, :address2, :city, :province_id, :country_id, :postal_code, :phone, :employee_number, :location, :job_title, :reference_number, :date_hired, :date_terminated, :notes, :custom_fields, :role_ids, :active_status, :is_learner, :is_admin, :is_instructor, :external_id, :supervisor_id
 
-    def initialize(attrs)
-      attrs.each do |k,v|
+    def initialize(attributes)
+      attributes.each do |k,v|
         instance_variable_set("@#{k.underscore}", v) unless v.nil?
       end
     end

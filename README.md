@@ -12,6 +12,7 @@ All the available REST routes can be found [here](https://myabsorb.com/api/rest/
 4. [Course](#course)
 5. [Category](#category)
 6. [Certificate](#certificate)
+7. [Chapter](#chapter)
 
 ## Installation
 
@@ -142,6 +143,17 @@ AbsorbApi::Category.find(id)
 To find a single `Certificate` by id:
 ```ruby
 AbsorbApi::Certificate.find(id)
+```
+
+### Chapter
+To return a collection of all available chapters:
+```ruby
+AbsorbApi::Chapter.all
+```
+
+To find a single `Chapter` by id:
+```ruby
+AbsorbApi::Chapter.find(id)
 ```
 
 ## Development

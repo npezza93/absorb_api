@@ -2,17 +2,17 @@ module AbsorbApi
   class CourseEnrollment < Base
     attr_reader :id, :course_id, :course_name, :course_version_id, :user_id, :full_name, :status, :progress, :score, :accepted_terms_and_conditions, :time_spent, :date_started, :date_completed, :enrollment_key_id, :certificate_id, :credits
 
-    def initialize(attrs)
-      attrs.each do |k,v|
+    def initialize(attributes)
+      attributes.each do |k,v|
         instance_variable_set("@#{k.underscore}", v) unless v.nil?
       end
     end
 
 
     def lessons
-      api.get("users/#{self.user_id}/enrollments/#{self.course_id}/lessons", { "modifiedSince" => "2016-01-01"}).body.map! do |lesson_attrs|
-        LessonEnrollment.new(lesson_attrs)
-      end.reject { |lesson| AbsorbApi.configuration.ignored_lesson_types.include? lesson.type }
+      api.get("users/#{self.user_id}/enrollments/#{self.course_id}/lessons", { "modifiedSince" => "2016-01-01"}).body.map! do |lesson_attributes|
+        LessonEnrollment.new(lesson_attributes)
+      end
     end
 
     # gets all associated lessons given a collection of enrollments

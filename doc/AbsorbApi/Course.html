@@ -498,9 +498,9 @@
           <div class="method-source-code" id="all-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 11</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">all</span>
-  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&quot;courses&quot;</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course_attrs</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">Course</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">course_attrs</span>)
-  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">ignored_course_ids</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">id</span> }
+  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&quot;courses&quot;</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course_attributes</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Course</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">course_attributes</span>)
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -536,7 +536,7 @@ called in parallel</p>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">enrollments_from_collection</span>(<span class="ruby-identifier">courses</span>)
   <span class="ruby-identifier">enrollments</span> = []
   <span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-identifier">courses</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">courses</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">ignored_course_ids</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">id</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span>
       <span class="ruby-identifier">enrollments</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;courses/#{course.id}/enrollments&quot;</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
@@ -589,7 +589,7 @@ called in parallel</p>
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(attrs)</span>
+            class="method-args">(attributes)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -605,8 +605,8 @@ called in parallel</p>
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 5</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">attrs</span>)
-  <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">attributes</span>)
+  <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k.underscore}&quot;</span>, <span class="ruby-identifier">v</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -641,8 +641,8 @@ called in parallel</p>
           <div class="method-source-code" id="where-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">modified_since</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">external_id</span><span class="ruby-operator">:</span> <span class="ruby-keyword">nil</span>)
-  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&quot;courses&quot;</span>, {<span class="ruby-string">&quot;modifiedSince&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:modified_since</span>, <span class="ruby-string">&quot;externalId&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:external_id</span> }).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course_attrs</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">Course</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">course_attrs</span>)
+  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&quot;courses&quot;</span>, {<span class="ruby-string">&quot;modifiedSince&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:modified_since</span>, <span class="ruby-string">&quot;externalId&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:external_id</span> }).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course_attributes</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">Course</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">course_attributes</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>

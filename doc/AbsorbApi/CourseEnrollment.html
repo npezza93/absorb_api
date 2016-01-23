@@ -375,7 +375,7 @@ typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(attrs)</span>
+            class="method-args">(attributes)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -391,8 +391,8 @@ typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
           
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/course_enrollment.rb, line 5</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">attrs</span>)
-  <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">attributes</span>)
+  <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k.underscore}&quot;</span>, <span class="ruby-identifier">v</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
@@ -435,9 +435,9 @@ typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
           <div class="method-source-code" id="lessons-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/course_enrollment.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lessons</span>
-  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{self.user_id}/enrollments/#{self.course_id}/lessons&quot;</span>, { <span class="ruby-string">&quot;modifiedSince&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;2016-01-01&quot;</span>}).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">lesson_attrs</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">LessonEnrollment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">lesson_attrs</span>)
-  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">lesson</span><span class="ruby-operator">|</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">ignored_lesson_types</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">lesson</span>.<span class="ruby-identifier">type</span> }
+  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{self.user_id}/enrollments/#{self.course_id}/lessons&quot;</span>, { <span class="ruby-string">&quot;modifiedSince&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;2016-01-01&quot;</span>}).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">lesson_attributes</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">LessonEnrollment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">lesson_attributes</span>)
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

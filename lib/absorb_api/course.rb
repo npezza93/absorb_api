@@ -2,22 +2,22 @@ module AbsorbApi
   class Course < Base
     attr_reader :id, :name, :description, :notes, :external_id, :access_date, :expire_type, :expire_duration, :expiry_date, :active_status, :tag_ids, :resource_ids, :editor_ids, :prices, :competency_definition_ids, :prerequisite_course_ids, :post_enrollment_course_ids, :allow_course_evaluation, :category_id, :certificate_url, :audience, :goals, :vendor, :company_cost, :learner_cost, :company_time, :learner_time
 
-    def initialize(attrs)
-      attrs.each do |k,v|
+    def initialize(attributes)
+      attributes.each do |k,v|
         instance_variable_set("@#{k.underscore}", v) unless v.nil?
       end
     end
 
     def self.all
-      api.get("courses").body.map! do |course_attrs|
-        Course.new(course_attrs)
-      end.reject { |course| AbsorbApi.configuration.ignored_course_ids.include? course.id }
+      api.get("courses").body.map! do |course_attributes|
+        Course.new(course_attributes)
+      end
     end
 
     # available filters modifiedSince, externalId
     def self.where(modified_since: nil, external_id: nil)
-      api.get("courses", {"modifiedSince" => :modified_since, "externalId" => :external_id }).body.map! do |course_attrs|
-        Course.new(course_attrs)
+      api.get("courses", {"modifiedSince" => :modified_since, "externalId" => :external_id }).body.map! do |course_attributes|
+        Course.new(course_attributes)
       end
     end
 
@@ -42,7 +42,7 @@ module AbsorbApi
     def self.enrollments_from_collection(courses)
       enrollments = []
       api.in_parallel do
-        courses.each do |course|
+        courses.reject { |course| AbsorbApi.configuration.ignored_course_ids.include? course.id }.each do |course|
           enrollments << api.get("courses/#{course.id}/enrollments")
         end
       end
