@@ -2,10 +2,11 @@ module AbsorbApi
   class Chapter < Base
     attr_reader :id, :name, :lesson_ids
 
-    def initialize(attributes)
+    def initialize(attributes, &block)
       attributes.each do |k,v|
         instance_variable_set("@#{k.underscore}", v) unless v.nil?
       end
+      yield self if block_given?
     end
 
     def self.all

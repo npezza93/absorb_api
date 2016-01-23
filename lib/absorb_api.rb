@@ -8,6 +8,8 @@ require "absorb_api/lesson_enrollment"
 require "absorb_api/category"
 require "absorb_api/certificate"
 require "absorb_api/chapter"
+require "absorb_api/curriculum"
+require "absorb_api/department"
 
 require 'faraday'
 require 'typhoeus/adapters/faraday'

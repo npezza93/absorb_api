@@ -37,6 +37,16 @@ module AbsorbApi
       end
     end
 
+    def chapters
+      api.get("courses/#{self.id}/chapters").body.map! do |chapter_attrs|
+        Chapter.new(chapter_attrs)
+      end
+    end
+
+    def find_chapter(id)
+      Chapter.new(api.get("courses/#{self.id}/chapters/#{id}").body)
+    end
+
     # gets all associated enrollments given a collection of courses
     # all calls are called in parallel
     def self.enrollments_from_collection(courses)
