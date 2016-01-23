@@ -1,18 +1,13 @@
 module AbsorbApi
   class Course < Base
+    include Orm
+    include Relations
+
     attr_accessor :id, :name, :description, :notes, :external_id, :access_date, :expire_type, :expire_duration, :expiry_date, :active_status, :tag_ids, :resource_ids, :editor_ids, :prices, :competency_definition_ids, :prerequisite_course_ids, :post_enrollment_course_ids, :allow_course_evaluation, :category_id, :certificate_url, :audience, :goals, :vendor, :company_cost, :learner_cost, :company_time, :learner_time
 
-    def initialize(attributes)
-      attributes.each do |k,v|
-        instance_variable_set("@#{k.underscore}", v) unless v.nil?
-      end
-    end
-
-    def self.all
-      api.get("courses").body.map! do |course_attributes|
-        Course.new(course_attributes)
-      end
-    end
+    has_many :certificates
+    has_many :chapters
+    has_many :enrollments, klass: :course_enrollment
 
     # available filters modifiedSince, externalId
     def self.where(modified_since: nil, external_id: nil)
@@ -21,27 +16,17 @@ module AbsorbApi
       end
     end
 
-    def self.find(id)
-      Course.new(api.get("courses/#{id}").body)
-    end
+    # def enrollments(status: nil, modified_since: nil)
+    #   api.get("courses/#{self.id}/enrollments", { status: :status, modifiedSince: :modified_since }).body.map! do |enrollment_attrs|
+    #     CourseEnrollment.new(enrollment_attrs)
+    #   end
+    # end
 
-    def enrollments(status: nil, modified_since: nil)
-      api.get("courses/#{self.id}/enrollments", { status: :status, modifiedSince: :modified_since }).body.map! do |enrollment_attrs|
-        CourseEnrollment.new(enrollment_attrs)
-      end
-    end
-
-    def certificates(include_expired: nil, acquired_date: nil, expiry_date: nil)
-      api.get("courses/#{self.id}/enrollments", { includeExpired: :include_expired, acquiredDate: :acquired_date,  expiryDate: :expiry_date}).body.map! do |certificate_attrs|
-        Certificate.new(certificate_attrs)
-      end
-    end
-
-    def chapters
-      api.get("courses/#{self.id}/chapters").body.map! do |chapter_attrs|
-        Chapter.new(chapter_attrs)
-      end
-    end
+    # def certificates(include_expired: nil, acquired_date: nil, expiry_date: nil)
+    #   api.get("courses/#{self.id}/certificates", { includeExpired: :include_expired, acquiredDate: :acquired_date,  expiryDate: :expiry_date}).body.map! do |certificate_attrs|
+    #     Certificate.new(certificate_attrs)
+    #   end
+    # end
 
     def find_chapter(id)
       Chapter.new(api.get("courses/#{self.id}/chapters/#{id}").body)

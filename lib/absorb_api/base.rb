@@ -1,5 +1,12 @@
 module AbsorbApi
   class Base
+    def initialize(attributes, &block)
+      attributes.each do |k,v|
+        instance_variable_set("@#{k.underscore}", v) unless v.nil?
+      end
+      yield self if block_given?
+    end
+
     def self.authorize
       @authorize ||= Faraday.new(:url => AbsorbApi.configuration.url) do |faraday|
         faraday.request :url_encoded
