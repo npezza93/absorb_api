@@ -10,13 +10,21 @@ module AbsorbApi
       def find(id)
         raise ResourceNotFound if id.blank?
         response = Base.api.get("#{to_s.demodulize.pluralize}/#{id}")
-        response.status == 404 ? raise(ResourceNotFound) : new(response.body)
+        if response.status == 404
+          raise(RouteNotFound)
+        elsif response.status == 400
+          raise ResourceNotFound
+        else
+          new(response.body)
+        end
       end
 
       def all
         response = Base.api.get("#{to_s.demodulize.pluralize}")
         if response.status == 404
           raise RouteNotFound
+        elsif response.status == 400
+          raise ResourceNotFound
         else
           Collection.new( response.body.map! do |attributes|
             new(attributes)

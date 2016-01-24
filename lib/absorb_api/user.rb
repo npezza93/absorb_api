@@ -7,7 +7,8 @@ module AbsorbApi
     has_many :courses
     has_many :enrollments, klass: :course_enrollment
     has_many :certificates
-
+    has_many :resources
+    
     # gets all associated courses given a collection of users
     # all calls are called in parallel
     # users are chunked in groups of 105 to keep typhoeus from getting bogged down

@@ -21,6 +21,12 @@ require "absorb_api/certificate"
 require "absorb_api/chapter"
 require "absorb_api/curriculum"
 require "absorb_api/department"
+require "absorb_api/tag"
+require "absorb_api/session_schedule"
+require "absorb_api/role"
+require "absorb_api/resource"
+require "absorb_api/prerequisite"
+require "absorb_api/lesson"
 
 module AbsorbApi
 end

@@ -17,6 +17,12 @@ Full documentation can be found at [http://npezza93.github.io/absorb_api/](http:
   * [Chapter](#chapter)
   * [Curriculum](#curriculum)
   * [Department](#department)
+  * [Role](#role)
+  * [Tag](#tag)
+  * [SessionSchedule](#sessionschedule)
+  * [Resource](#resource)
+  * [Prerequisite](#prerequisite)
+  * [Lesson](#lesson)
   * [CourseEnrollment](#courseenrollment)
   * [LessonEnrollment](#lessonenrollment)
 4. [Development](#development)
@@ -73,6 +79,9 @@ user.certificates
 # To return a single certificate for a specific user
 user.find_certificate(id)
 
+# To return a collection of all resources available to an user
+user.resources
+
 # To return a collection of all courses available for enrollment for a user
 user.courses
 
@@ -110,7 +119,7 @@ course.enrollments
 # Available filters for enrollments include status and modifiedSince
 course.enrollments(status: 0, modifiedSince: DateTime.new(2016, 1, 1).to_s)
 
-# To return a collection of all certificates awarded to a user
+# To return a collection of all certificates awarded in a course
 course.certificates
 # Available filters for certificates include includeExpired, acquiredDate, and expiryDate
 course.certificates(includeExpired: true)
@@ -121,6 +130,19 @@ course.find_certificate(id)
 course.chapters
 # To return a single chapters for a specific course
 course.find_chapter(id)
+
+# To return a collection of all resources available to a course
+course.resources
+# To return a single resource for a specific course
+course.find_resource(id)
+
+# To return a collection of all prerequisites to a course
+course.prerequisites
+
+# To return a collection of all lessons available to a course
+course.lessons
+# To return a single lesson for a specific course
+course.find_lesson(id)
 
 # To return a collection of associated enrollments given a collection of courses
 # Available conditions include modifiedSince and status
@@ -183,6 +205,67 @@ AbsorbApi::Department.create do |department|
   department.name = "Test Department"
   department.parent_id = 1
 end
+```
+
+### Role
+```ruby
+# To return a collection of all available roles
+AbsorbApi::Role.all
+
+# To find a single role by id
+AbsorbApi::Role.find(id)
+```
+
+### Tag
+```ruby
+# To return a collection of all available tags
+AbsorbApi::Tag.all
+
+# To find a single tag by id
+AbsorbApi::Tag.find(id)
+
+# To create a new tag
+AbsorbApi::Tag.create(name: "example")
+# or
+AbsorbApi::Tag.create do |tag|
+  user.name  = "example"
+end
+```
+
+### SessionSchedule
+```ruby
+# To return a collection of all available session schedules
+AbsorbApi::SessionSchedule.all
+
+# To find a single session schedule by id
+AbsorbApi::SessionSchedule.find(id)
+```
+
+### Resource
+```ruby
+# To return a collection of all available resources
+AbsorbApi::Resource.all
+
+# To find a single resource by id
+AbsorbApi::Resource.find(id)
+```
+
+### Prerequisite
+```ruby
+# To return a collection of all available prerequisites
+AbsorbApi::Prerequisite.all
+
+# To find a single prerequisite by id
+AbsorbApi::Prerequisite.find(id)
+```
+
+### Lesson
+```ruby
+# To return a collection of all available lessons
+AbsorbApi::Lesson.all
+
+# To find a single lesson by id
+AbsorbApi::Lesson.find(id)
 ```
 
 ### CourseEnrollment

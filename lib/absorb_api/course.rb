@@ -7,7 +7,10 @@ module AbsorbApi
     has_many :certificates
     has_many :chapters
     has_many :enrollments, :course_enrollment
-
+    has_many :resources
+    has_many :prerequisites
+    has_many :lessons
+    
     # gets all associated enrollments given a collection of courses
     # all calls are called in parallel
     def self.enrollments_from_collection(courses, **conditions)
