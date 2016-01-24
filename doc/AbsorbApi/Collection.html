@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class AbsorbApi::Category - RDoc Documentation</title>
+<title>class AbsorbApi::Collection - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
@@ -58,30 +58,29 @@
   <h3>Parent</h3>
 
   
-  <p class="link"><a href="Base.html">AbsorbApi::Base</a>
+  <p class="link">Array
   
 </div>
 
-    <div id="includes-section" class="nav-section">
-  <h3>Included Modules</h3>
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
 
-  <ul class="link-list">
-  
-  
-    <li><a class="include" href="Orm.html">AbsorbApi::Orm</a>
-  
-  
+  <ul class="link-list" role="directory">
+    
+    <li class="calls-super" ><a href="#method-c-new">::new</a>
+    
   </ul>
 </div>
 
-    
-    
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-AbsorbApi::Category">
-  <h1 id="class-AbsorbApi::Category" class="class">
-    class AbsorbApi::Category
+<main role="main" aria-labelledby="class-AbsorbApi::Collection">
+  <h1 id="class-AbsorbApi::Collection" class="class">
+    class AbsorbApi::Collection
   </h1>
 
   <section class="description">
@@ -105,49 +104,10 @@
       </header>
 
       
-      <div id="attribute-i-description" class="method-detail">
+      <div id="attribute-i-metadata" class="method-detail">
         <div class="method-heading attribute-method-heading">
-          <span class="method-name">description</span><span
-            class="attribute-access-type">[RW]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
-      <div id="attribute-i-id" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">id</span><span
-            class="attribute-access-type">[RW]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
-      <div id="attribute-i-name" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">name</span><span
-            class="attribute-access-type">[RW]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
-      <div id="attribute-i-parent_id" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">parent_id</span><span
-            class="attribute-access-type">[RW]</span>
+          <span class="method-name">metadata</span><span
+            class="attribute-access-type">[R]</span>
         </div>
 
         <div class="method-description">
@@ -161,6 +121,53 @@
     
 
     
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(elements, metadata = {})</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+            <div class="method-calls-super">
+              Calls superclass method
+              
+            </div>
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/absorb_api/collection.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">elements</span>, <span class="ruby-identifier">metadata</span> = {})
+  <span class="ruby-keyword">super</span>(<span class="ruby-identifier">elements</span>)
+  <span class="ruby-ivar">@metadata</span> = <span class="ruby-identifier">metadata</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
   </section>
 </main>
 

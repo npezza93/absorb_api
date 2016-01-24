@@ -59,10 +59,14 @@
     <li><a href="#label-Table+of+Contents">Table of Contents</a>
     <li><a href="#label-Installation">Installation</a>
     <li><a href="#label-Configuration">Configuration</a>
+    <li><a href="#label-Models">Models</a>
     <li><a href="#label-User">User</a>
     <li><a href="#label-Course">Course</a>
     <li><a href="#label-Category">Category</a>
     <li><a href="#label-Certificate">Certificate</a>
+    <li><a href="#label-Chapter">Chapter</a>
+    <li><a href="#label-Curriculum">Curriculum</a>
+    <li><a href="#label-Department">Department</a>
     <li><a href="#label-Development">Development</a>
     <li><a href="#label-Contributing">Contributing</a>
     <li><a href="#label-License">License</a>
@@ -108,11 +112,16 @@ you down or you’ve outgrown your current training model, Absorb can help. ”<
 <p>All the available REST routes can be found <a
 href="https://myabsorb.com/api/rest/v1/Help">here</a>.</p>
 
+<p>Full documentation can be found at <a
+href="http://npezza93.github.io/absorb_api/">npezza93.github.io/absorb_api/</a></p>
+
 <h2 id="label-Table+of+Contents">Table of Contents<span><a href="#label-Table+of+Contents">&para;</a> <a href="#top">&uarr;</a></span></h2>
 <ol><li>
 <p><a href="#installation">Installation</a></p>
 </li><li>
 <p><a href="#configuration">Configuration</a></p>
+</li><li>
+<p><a href="#models">Models</a></p>
 </li><li>
 <p><a href="#user">User</a></p>
 </li><li>
@@ -121,6 +130,14 @@ href="https://myabsorb.com/api/rest/v1/Help">here</a>.</p>
 <p><a href="#category">Category</a></p>
 </li><li>
 <p><a href="#certificate">Certificate</a></p>
+</li><li>
+<p><a href="#chapter">Chapter</a></p>
+</li><li>
+<p><a href="#curriculum">Curriculum</a></p>
+</li><li>
+<p><a href="#department">Department</a></p>
+</li><li>
+<p><a href="#development">Development</a></p>
 </li></ol>
 
 <h2 id="label-Installation">Installation<span><a href="#label-Installation">&para;</a> <a href="#top">&uarr;</a></span></h2>
@@ -138,7 +155,7 @@ href="https://myabsorb.com/api/rest/v1/Help">here</a>.</p>
 
 <pre>$ gem install absorb_api</pre>
 
-<h3 id="label-Configuration">Configuration<span><a href="#label-Configuration">&para;</a> <a href="#top">&uarr;</a></span></h3>
+<h2 id="label-Configuration">Configuration<span><a href="#label-Configuration">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
 <pre class="ruby"><span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configure</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
   <span class="ruby-identifier">c</span>.<span class="ruby-identifier">absorbuser</span> = <span class="ruby-identifier">absorb_username</span>
@@ -150,83 +167,144 @@ href="https://myabsorb.com/api/rest/v1/Help">here</a>.</p>
 <span class="ruby-keyword">end</span>
 </pre>
 
+<h2 id="label-Models">Models<span><a href="#label-Models">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
 <h3 id="label-User">User<span><a href="#label-User">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>To return a collection of all available users: <code>ruby
-AbsorbApi::User.all </code></p>
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available users</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">all</span>
 
-<p>To find a single <code>User</code> by id: <code>ruby
-AbsorbApi::User.find(id) </code></p>
+<span class="ruby-comment"># To find a single user by id:</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
 
-<p>When searching for users, you can filter by <strong>email</strong>,
-<strong>username</strong>, <strong>modifiedSince</strong>, and
-<strong>externalId</strong>: <code>ruby AbsorbApi::User.where(params)
-</code></p>
+<span class="ruby-comment"># To return a collection of users matching conditions</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">conditions</span>)
+<span class="ruby-comment"># available conditions include email, username, modifiedSince, and externalId</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">email</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;email@gmail.com&quot;</span>)
 
-<p>To create a new user in Absorb LMS: <code>ruby
-AbsorbApi::User.create(department_id: DepartmentId, first_name: FirstName,
-last_name: LastName, user_name: UserName, email_address: EmailAddress,
-password: Password) </code></p>
+<span class="ruby-comment"># To return a collection of enrollments for a specific user:</span>
+<span class="ruby-identifier">user</span>.<span class="ruby-identifier">enrollments</span>
+<span class="ruby-comment"># Available filters for enrollments include status and modifiedSince</span>
+<span class="ruby-identifier">user</span>.<span class="ruby-identifier">enrollments</span>(<span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">0</span>, <span class="ruby-identifier">modifiedSince</span><span class="ruby-operator">:</span> <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">2016</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span>)
 
-<p>To return a collection of courses available for enrollment for a specific
-user: <code>ruby user = AbsorbApi::User.find(1) available_courses =
-user.courses </code></p>
+<span class="ruby-comment"># To return a collection of all certificates awarded to a user</span>
+<span class="ruby-identifier">user</span>.<span class="ruby-identifier">certificates</span>
+<span class="ruby-comment"># To return a single certificate for a specific user</span>
+<span class="ruby-identifier">user</span>.<span class="ruby-identifier">find_certificate</span>(<span class="ruby-identifier">id</span>)
 
-<p>To returns a collection of the enrollments for a specific user: <code>ruby
-user = AbsorbApi::User.find(1) available_enrollments = user.enrollments
-</code></p>
+<span class="ruby-comment"># To return a collection of all courses available for enrollment for a user</span>
+<span class="ruby-identifier">user</span>.<span class="ruby-identifier">courses</span>
 
-<p>To return a collection of certificates awarded to a specific user:
-<code>ruby user = AbsorbApi::User.find(1) user_certificates =
-user.certificates </code></p>
-
-<p>To return a certificates awarded to a specific user: <code>ruby user =
-AbsorbApi::User.find(1) user_certificate = user.find_certificate(id)
-</code></p>
+<span class="ruby-comment"># To create a new user</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">department_id</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;department_id&quot;</span>, <span class="ruby-identifier">first_name</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;first_name&quot;</span>, <span class="ruby-identifier">last_name</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;last_name&quot;</span>, <span class="ruby-identifier">user_name</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;user_name&quot;</span>, <span class="ruby-identifier">email_address</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;email_address&quot;</span>, <span class="ruby-identifier">password</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;password&quot;</span>)
+<span class="ruby-comment"># or</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">create</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">user</span>.<span class="ruby-identifier">department_id</span>  = <span class="ruby-string">&quot;department_id&quot;</span>
+  <span class="ruby-identifier">user</span>.<span class="ruby-identifier">first_name</span>     = <span class="ruby-string">&quot;first_name&quot;</span>
+  <span class="ruby-identifier">user</span>.<span class="ruby-identifier">last_name</span>      = <span class="ruby-string">&quot;last_name&quot;</span>
+  <span class="ruby-identifier">user</span>.<span class="ruby-identifier">user_name</span>      = <span class="ruby-string">&quot;user_name&quot;</span>
+  <span class="ruby-identifier">user</span>.<span class="ruby-identifier">email_address</span>  = <span class="ruby-string">&quot;email_address&quot;</span>
+  <span class="ruby-identifier">user</span>.<span class="ruby-identifier">password</span>       = <span class="ruby-string">&quot;password&quot;</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <p>To return a collection of courses available per user given a collection of
-users: <code>ruby users = AbsorbApi::User.all courses =
+users:  <code>ruby   users = AbsorbApi::User.all   courses =
 AbsorbApi::User.courses_from_collection(users) </code></p>
 
 <h3 id="label-Course">Course<span><a href="#label-Course">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>To return a collection of all available courses: <code>ruby
-AbsorbApi::Course.all </code></p>
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available courses</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Course</span>.<span class="ruby-identifier">all</span>
 
-<p>To find a single <code>Course</code> by id: <code>ruby
-AbsorbApi::Course.find(id) </code></p>
+<span class="ruby-comment"># To find a single course by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Course</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
 
-<p>When searching for courses, you can filter by
-<strong>modifiedSince</strong>, and <strong>externalId</strong>: <code>ruby
-AbsorbApi::Course.where(modified_since: modifiedSince, external_id:
-externalId) </code></p>
+<span class="ruby-comment"># To return a collection of courses matching conditions</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Course</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">conditions</span>)
+<span class="ruby-comment"># available conditions include modifiedSince and externalId</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Course</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">modifiedSince</span><span class="ruby-operator">:</span> <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">2016</span>,<span class="ruby-value">1</span>,<span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span>)
 
-<p>To return a collection of enrollments for a specific course: <code>ruby #
-available filters include status and modified_since course =
-AbsorbApi::Course.find(1) course_enrollments = course.enrollments </code></p>
+<span class="ruby-comment"># To return a collection of enrollments for a specific course:</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">enrollments</span>
+<span class="ruby-comment"># Available filters for enrollments include status and modifiedSince</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">enrollments</span>(<span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">0</span>, <span class="ruby-identifier">modifiedSince</span><span class="ruby-operator">:</span> <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">2016</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span>)
 
-<p>To return a collection of certificates for a specific course: <code>ruby #
-available filters include include_expired, acquired_date, and expiry_date
-course = AbsorbApi::Course.find(1) course_certificates =
-course.certificates </code></p>
+<span class="ruby-comment"># To return a collection of all certificates awarded to a user</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">certificates</span>
+<span class="ruby-comment"># Available filters for certificates include includeExpired, acquiredDate, and expiryDate</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">certificates</span>(<span class="ruby-identifier">includeExpired</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>)
+<span class="ruby-comment"># To return a single certificate for a specific course</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">find_certificate</span>(<span class="ruby-identifier">id</span>)
+
+<span class="ruby-comment"># To return a collection of chapters for a specific course</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">chapters</span>
+<span class="ruby-comment"># To return a single chapters for a specific course</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">find_chapter</span>(<span class="ruby-identifier">id</span>)
+</pre>
 
 <p>To return a collection of associated enrollments given a collection of
-courses <code>ruby
+courses  <code>ruby  
 AbsorbApi::Course.enrollments_from_collection(AbsorbApi::Course.all)
 </code></p>
 
 <h3 id="label-Category">Category<span><a href="#label-Category">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>To return a collection of all available categories: <code>ruby
-AbsorbApi::Category.all </code></p>
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available categories</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Category</span>.<span class="ruby-identifier">all</span>
 
-<p>To find a single <code>Category</code> by id: <code>ruby
-AbsorbApi::Category.find(id) </code></p>
+<span class="ruby-comment"># To find a single category by id:</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Category</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+</pre>
 
 <h3 id="label-Certificate">Certificate<span><a href="#label-Certificate">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
-<p>To find a single <code>Certificate</code> by id: <code>ruby
-AbsorbApi::Certificate.find(id) </code></p>
+<pre class="ruby"><span class="ruby-comment"># To find a single certificate by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Certificate</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+</pre>
+
+<h3 id="label-Chapter">Chapter<span><a href="#label-Chapter">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available chapters</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Chapter</span>.<span class="ruby-identifier">all</span>
+
+<span class="ruby-comment"># To find a single chapter by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Chapter</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+</pre>
+
+<h3 id="label-Curriculum">Curriculum<span><a href="#label-Curriculum">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available curriculums</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Curriculum</span>.<span class="ruby-identifier">all</span>
+
+<span class="ruby-comment"># To find a single curriculum by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Curriculum</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+</pre>
+
+<h3 id="label-Department">Department<span><a href="#label-Department">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available departments</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Department</span>.<span class="ruby-identifier">all</span>
+
+<span class="ruby-comment"># To find a single department by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Department</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+
+<span class="ruby-comment"># To return a collection of departments matching conditions</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Department</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">conditions</span>)
+<span class="ruby-comment"># available conditions include departmentName, and externalId</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Department</span>.<span class="ruby-identifier">where</span>(<span class="ruby-identifier">departmentName</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Technology&quot;</span>)
+
+<span class="ruby-comment"># To return the parent department</span>
+<span class="ruby-identifier">department</span>.<span class="ruby-identifier">parent</span>
+
+<span class="ruby-comment"># To create a new department</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Department</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Test Department&quot;</span>, <span class="ruby-identifier">parent_id</span><span class="ruby-operator">:</span> <span class="ruby-value">1</span>)
+<span class="ruby-comment"># or</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Department</span>.<span class="ruby-identifier">create</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">department</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">department</span>.<span class="ruby-identifier">name</span> = <span class="ruby-string">&quot;Test Department&quot;</span>
+  <span class="ruby-identifier">department</span>.<span class="ruby-identifier">parent_id</span> = <span class="ruby-value">1</span>
+<span class="ruby-keyword">end</span>
+</pre>
 
 <h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
