@@ -6,11 +6,11 @@ require 'absorb_api/version'
 Gem::Specification.new do |spec|
   spec.name          = "absorb_api"
   spec.version       = AbsorbApi::VERSION
-  spec.authors       = ["npezza93"]
+  spec.authors       = ["npezza"]
   spec.email         = ["npezza93@gmail.com"]
 
   spec.summary       = "API wrapper for Absorb LMS"
-  spec.description   = "\"Absorb LMS is a powerful, flexible, and visually stunning software platform teamed with expert implementation and support to help you build the training programs your business needs. Whether your old LMS is slowing you down or you’ve outgrown your current training model, Absorb can help.
+  spec.description   = "\"Absorb API is a ruby wrapper for Absorb's LMS. \n\n Absorb LMS is a powerful, flexible, and visually stunning software platform teamed with expert implementation and support to help you build the training programs your business needs. Whether your old LMS is slowing you down or you’ve outgrown your current training model, Absorb can help.
   \""
   spec.homepage      = "https://github.com/npezza93/absorb_api"
   spec.license       = "MIT"
