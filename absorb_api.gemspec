@@ -10,8 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["npezza93@gmail.com"]
 
   spec.summary       = "API wrapper for Absorb LMS"
-  spec.description   = "\"Absorb API is a ruby wrapper for Absorb's LMS. \n\n Absorb LMS is a powerful, flexible, and visually stunning software platform teamed with expert implementation and support to help you build the training programs your business needs. Whether your old LMS is slowing you down or you’ve outgrown your current training model, Absorb can help.
-  \""
+  spec.description   = "This gem provides a ruby wrapper for Absorb's Learning Management System API. \n\n"
   spec.homepage      = "https://github.com/npezza93/absorb_api"
   spec.license       = "MIT"
 
