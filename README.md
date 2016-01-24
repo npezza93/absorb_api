@@ -160,9 +160,6 @@ AbsorbApi::Curriculum.all
 
 # To find a single curriculum by id
 AbsorbApi::Curriculum.find(id)
-
-# To return the related category
-curriculum.category
 ```
 
 ### Department
