@@ -67,6 +67,14 @@
     <li><a href="#label-Chapter">Chapter</a>
     <li><a href="#label-Curriculum">Curriculum</a>
     <li><a href="#label-Department">Department</a>
+    <li><a href="#label-Role">Role</a>
+    <li><a href="#label-Tag">Tag</a>
+    <li><a href="#label-SessionSchedule">SessionSchedule</a>
+    <li><a href="#label-Resource">Resource</a>
+    <li><a href="#label-Prerequisite">Prerequisite</a>
+    <li><a href="#label-Lesson">Lesson</a>
+    <li><a href="#label-CourseEnrollment">CourseEnrollment</a>
+    <li><a href="#label-LessonEnrollment">LessonEnrollment</a>
     <li><a href="#label-Development">Development</a>
     <li><a href="#label-Contributing">Contributing</a>
     <li><a href="#label-License">License</a>
@@ -137,6 +145,22 @@ href="http://npezza93.github.io/absorb_api/">npezza93.github.io/absorb_api/</a><
 </li><li>
 <p><a href="#department">Department</a></p>
 </li><li>
+<p><a href="#role">Role</a></p>
+</li><li>
+<p><a href="#tag">Tag</a></p>
+</li><li>
+<p><a href="#sessionschedule">SessionSchedule</a></p>
+</li><li>
+<p><a href="#resource">Resource</a></p>
+</li><li>
+<p><a href="#prerequisite">Prerequisite</a></p>
+</li><li>
+<p><a href="#lesson">Lesson</a></p>
+</li><li>
+<p><a href="#courseenrollment">CourseEnrollment</a></p>
+</li><li>
+<p><a href="#lessonenrollment">LessonEnrollment</a></p>
+</li><li>
 <p><a href="#development">Development</a></p>
 </li></ol>
 
@@ -192,6 +216,9 @@ href="http://npezza93.github.io/absorb_api/">npezza93.github.io/absorb_api/</a><
 <span class="ruby-comment"># To return a single certificate for a specific user</span>
 <span class="ruby-identifier">user</span>.<span class="ruby-identifier">find_certificate</span>(<span class="ruby-identifier">id</span>)
 
+<span class="ruby-comment"># To return a collection of all resources available to an user</span>
+<span class="ruby-identifier">user</span>.<span class="ruby-identifier">resources</span>
+
 <span class="ruby-comment"># To return a collection of all courses available for enrollment for a user</span>
 <span class="ruby-identifier">user</span>.<span class="ruby-identifier">courses</span>
 
@@ -206,11 +233,10 @@ href="http://npezza93.github.io/absorb_api/">npezza93.github.io/absorb_api/</a><
   <span class="ruby-identifier">user</span>.<span class="ruby-identifier">email_address</span>  = <span class="ruby-string">&quot;email_address&quot;</span>
   <span class="ruby-identifier">user</span>.<span class="ruby-identifier">password</span>       = <span class="ruby-string">&quot;password&quot;</span>
 <span class="ruby-keyword">end</span>
-</pre>
 
-<p>To return a collection of courses available per user given a collection of
-users:  <code>ruby   users = AbsorbApi::User.all   courses =
-AbsorbApi::User.courses_from_collection(users) </code></p>
+<span class="ruby-comment"># To return a collection of courses available per user given a collection of users</span>
+<span class="ruby-identifier">courses</span> = <span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">courses_from_collection</span>(<span class="ruby-identifier">users</span>)
+</pre>
 
 <h3 id="label-Course">Course<span><a href="#label-Course">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
@@ -230,7 +256,7 @@ AbsorbApi::User.courses_from_collection(users) </code></p>
 <span class="ruby-comment"># Available filters for enrollments include status and modifiedSince</span>
 <span class="ruby-identifier">course</span>.<span class="ruby-identifier">enrollments</span>(<span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">0</span>, <span class="ruby-identifier">modifiedSince</span><span class="ruby-operator">:</span> <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">2016</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span>)
 
-<span class="ruby-comment"># To return a collection of all certificates awarded to a user</span>
+<span class="ruby-comment"># To return a collection of all certificates awarded in a course</span>
 <span class="ruby-identifier">course</span>.<span class="ruby-identifier">certificates</span>
 <span class="ruby-comment"># Available filters for certificates include includeExpired, acquiredDate, and expiryDate</span>
 <span class="ruby-identifier">course</span>.<span class="ruby-identifier">certificates</span>(<span class="ruby-identifier">includeExpired</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>)
@@ -241,12 +267,24 @@ AbsorbApi::User.courses_from_collection(users) </code></p>
 <span class="ruby-identifier">course</span>.<span class="ruby-identifier">chapters</span>
 <span class="ruby-comment"># To return a single chapters for a specific course</span>
 <span class="ruby-identifier">course</span>.<span class="ruby-identifier">find_chapter</span>(<span class="ruby-identifier">id</span>)
-</pre>
 
-<p>To return a collection of associated enrollments given a collection of
-courses  <code>ruby  
-AbsorbApi::Course.enrollments_from_collection(AbsorbApi::Course.all)
-</code></p>
+<span class="ruby-comment"># To return a collection of all resources available to a course</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">resources</span>
+<span class="ruby-comment"># To return a single resource for a specific course</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">find_resource</span>(<span class="ruby-identifier">id</span>)
+
+<span class="ruby-comment"># To return a collection of all prerequisites to a course</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">prerequisites</span>
+
+<span class="ruby-comment"># To return a collection of all lessons available to a course</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">lessons</span>
+<span class="ruby-comment"># To return a single lesson for a specific course</span>
+<span class="ruby-identifier">course</span>.<span class="ruby-identifier">find_lesson</span>(<span class="ruby-identifier">id</span>)
+
+<span class="ruby-comment"># To return a collection of associated enrollments given a collection of courses</span>
+<span class="ruby-comment"># Available conditions include modifiedSince and status</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Course</span>.<span class="ruby-identifier">enrollments_from_collection</span>(<span class="ruby-identifier">courses</span>, <span class="ruby-identifier">modifiedSince</span><span class="ruby-operator">:</span> <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">2016</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>))
+</pre>
 
 <h3 id="label-Category">Category<span><a href="#label-Category">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
@@ -305,6 +343,80 @@ AbsorbApi::Course.enrollments_from_collection(AbsorbApi::Course.all)
   <span class="ruby-identifier">department</span>.<span class="ruby-identifier">parent_id</span> = <span class="ruby-value">1</span>
 <span class="ruby-keyword">end</span>
 </pre>
+
+<h3 id="label-Role">Role<span><a href="#label-Role">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available roles</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Role</span>.<span class="ruby-identifier">all</span>
+
+<span class="ruby-comment"># To find a single role by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Role</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+</pre>
+
+<h3 id="label-Tag">Tag<span><a href="#label-Tag">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available tags</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Tag</span>.<span class="ruby-identifier">all</span>
+
+<span class="ruby-comment"># To find a single tag by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Tag</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+
+<span class="ruby-comment"># To create a new tag</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Tag</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">name</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;example&quot;</span>)
+<span class="ruby-comment"># or</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Tag</span>.<span class="ruby-identifier">create</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tag</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">user</span>.<span class="ruby-identifier">name</span>  = <span class="ruby-string">&quot;example&quot;</span>
+<span class="ruby-keyword">end</span>
+</pre>
+
+<h3 id="label-SessionSchedule">SessionSchedule<span><a href="#label-SessionSchedule">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available session schedules</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">SessionSchedule</span>.<span class="ruby-identifier">all</span>
+
+<span class="ruby-comment"># To find a single session schedule by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">SessionSchedule</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+</pre>
+
+<h3 id="label-Resource">Resource<span><a href="#label-Resource">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available resources</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Resource</span>.<span class="ruby-identifier">all</span>
+
+<span class="ruby-comment"># To find a single resource by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Resource</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+</pre>
+
+<h3 id="label-Prerequisite">Prerequisite<span><a href="#label-Prerequisite">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available prerequisites</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Prerequisite</span>.<span class="ruby-identifier">all</span>
+
+<span class="ruby-comment"># To find a single prerequisite by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Prerequisite</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+</pre>
+
+<h3 id="label-Lesson">Lesson<span><a href="#label-Lesson">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of all available lessons</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Lesson</span>.<span class="ruby-identifier">all</span>
+
+<span class="ruby-comment"># To find a single lesson by id</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">Lesson</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+</pre>
+
+<h3 id="label-CourseEnrollment">CourseEnrollment<span><a href="#label-CourseEnrollment">&para;</a> <a href="#top">&uarr;</a></span></h3>
+
+<pre class="ruby"><span class="ruby-comment"># To return a collection of associated lessons matching conditions</span>
+<span class="ruby-comment"># Available conditions are modifiedSince and status</span>
+<span class="ruby-identifier">course_enrollment</span>.<span class="ruby-identifier">lessons</span>
+
+<span class="ruby-comment"># To return a collection of associated enrollments given a collection of courses</span>
+<span class="ruby-comment"># Available conditions include modifiedSince and status</span>
+<span class="ruby-constant">AbsorbApi</span><span class="ruby-operator">::</span><span class="ruby-constant">CourseEnrollment</span>.<span class="ruby-identifier">lessons_from_collection</span>(<span class="ruby-identifier">course_enrollments</span>, <span class="ruby-identifier">modifiedSince</span><span class="ruby-operator">:</span> <span class="ruby-constant">DateTime</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">2016</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>))
+</pre>
+
+<h3 id="label-LessonEnrollment">LessonEnrollment<span><a href="#label-LessonEnrollment">&para;</a> <a href="#top">&uarr;</a></span></h3>
 
 <h2 id="label-Development">Development<span><a href="#label-Development">&para;</a> <a href="#top">&uarr;</a></span></h2>
 
