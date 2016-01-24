@@ -62,7 +62,18 @@
   
 </div>
 
-    
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><a class="include" href="Orm.html">AbsorbApi::Orm</a>
+  
+  
+  </ul>
+</div>
+
     
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
@@ -129,7 +140,7 @@
 
           
           <div class="method-source-code" id="api-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/base.rb, line 22</span>
+            <pre><span class="ruby-comment"># File lib/absorb_api/base.rb, line 24</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">api</span>
   <span class="ruby-ivar">@api</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Faraday</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">url</span>, <span class="ruby-value">:parallel_manager</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Typhoeus</span><span class="ruby-operator">::</span><span class="ruby-constant">Hydra</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:max_concurrency</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>)) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">faraday</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">faraday</span>.<span class="ruby-identifier">request</span> <span class="ruby-value">:json</span>
@@ -167,7 +178,7 @@
 
           
           <div class="method-source-code" id="authorize-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/base.rb, line 10</span>
+            <pre><span class="ruby-comment"># File lib/absorb_api/base.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">authorize</span>
   <span class="ruby-ivar">@authorize</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Faraday</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">url</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">faraday</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">faraday</span>.<span class="ruby-identifier">request</span> <span class="ruby-value">:url_encoded</span>
@@ -193,7 +204,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">(attributes) { |self| ... }</span>
+            class="method-args">(attributes = []) { |self| ... }</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -208,8 +219,8 @@
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/base.rb, line 3</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">attributes</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+            <pre><span class="ruby-comment"># File lib/absorb_api/base.rb, line 5</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">attributes</span> = [], <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{k.to_s.underscore}&quot;</span>, <span class="ruby-identifier">v</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">v</span>.<span class="ruby-identifier">nil?</span>
   <span class="ruby-keyword">end</span>

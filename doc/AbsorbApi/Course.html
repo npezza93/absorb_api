@@ -68,10 +68,6 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Orm.html">AbsorbApi::Orm</a>
-  
-  
-  
     <li><a class="include" href="Relations.html">AbsorbApi::Relations</a>
   
   
@@ -484,7 +480,7 @@
         
         <div class="method-heading">
           <span class="method-name">enrollments_from_collection</span><span
-            class="method-args">(courses)</span>
+            class="method-args">(courses, **filters)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -500,12 +496,12 @@ called in parallel</p>
 
           
           <div class="method-source-code" id="enrollments_from_collection-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 14</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">enrollments_from_collection</span>(<span class="ruby-identifier">courses</span>)
+            <pre><span class="ruby-comment"># File lib/absorb_api/course.rb, line 13</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">enrollments_from_collection</span>(<span class="ruby-identifier">courses</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">filters</span>)
   <span class="ruby-identifier">enrollments</span> = []
   <span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
     <span class="ruby-identifier">courses</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">ignored_course_ids</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">course</span>.<span class="ruby-identifier">id</span> }.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">course</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">enrollments</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;courses/#{course.id}/enrollments&quot;</span>)
+      <span class="ruby-identifier">enrollments</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;courses/#{course.id}/enrollments&quot;</span>, <span class="ruby-identifier">filters</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
   <span class="ruby-identifier">enrollments</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">attrs</span><span class="ruby-operator">|</span> <span class="ruby-constant">CourseEnrollment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">attrs</span>) } }.<span class="ruby-identifier">flatten</span>
