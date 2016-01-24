@@ -20,31 +20,31 @@ Full documentation can be found at [http://npezza93.github.io/absorb_api/](http:
 4. [Development](#development)
 
 ## Installation
-  Add this line to your application's Gemfile:
+Add this line to your application's Gemfile:
 
-  ```ruby
-  gem 'absorb_api'
-  ```
+```ruby
+gem 'absorb_api'
+```
 
-  And then execute:
+And then execute:
 
-      $ bundle
+    $ bundle
 
-  Or install it yourself as:
+Or install it yourself as:
 
-      $ gem install absorb_api
+    $ gem install absorb_api
 
-  ## Configuration
-  ```ruby
-  AbsorbApi.configure do |c|
-    c.absorbuser = absorb_username
-    c.absorbpass = absorb_password
-    c.absorbkey = absorb_privatekey
-    c.url = absorb_url
-    c.ignored_course_ids = [course_ids_to_ignore]
-    c.ignored_lesson_types = [lesson_types_to_ignore]
-  end
-  ```
+## Configuration
+```ruby
+AbsorbApi.configure do |c|
+  c.absorbuser = absorb_username
+  c.absorbpass = absorb_password
+  c.absorbkey = absorb_privatekey
+  c.url = absorb_url
+  c.ignored_course_ids = [course_ids_to_ignore]
+  c.ignored_lesson_types = [lesson_types_to_ignore]
+end
+```
 
 ## Models
 
