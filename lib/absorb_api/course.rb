@@ -7,31 +7,8 @@ module AbsorbApi
 
     has_many :certificates
     has_many :chapters
-    has_many :enrollments, klass: :course_enrollment
-
-    # available filters modifiedSince, externalId
-    def self.where(modified_since: nil, external_id: nil)
-      api.get("courses", {"modifiedSince" => :modified_since, "externalId" => :external_id }).body.map! do |course_attributes|
-        Course.new(course_attributes)
-      end
-    end
-
-    # def enrollments(status: nil, modified_since: nil)
-    #   api.get("courses/#{self.id}/enrollments", { status: :status, modifiedSince: :modified_since }).body.map! do |enrollment_attrs|
-    #     CourseEnrollment.new(enrollment_attrs)
-    #   end
-    # end
-
-    # def certificates(include_expired: nil, acquired_date: nil, expiry_date: nil)
-    #   api.get("courses/#{self.id}/certificates", { includeExpired: :include_expired, acquiredDate: :acquired_date,  expiryDate: :expiry_date}).body.map! do |certificate_attrs|
-    #     Certificate.new(certificate_attrs)
-    #   end
-    # end
-
-    def find_chapter(id)
-      Chapter.new(api.get("courses/#{self.id}/chapters/#{id}").body)
-    end
-
+    has_many :enrollments, :course_enrollment
+    
     # gets all associated enrollments given a collection of courses
     # all calls are called in parallel
     def self.enrollments_from_collection(courses)

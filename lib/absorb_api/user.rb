@@ -9,28 +9,6 @@ module AbsorbApi
     has_many :enrollments, klass: :course_enrollment
     has_many :certificates
 
-    # available filters email, username, modifiedSince, externalId
-    def self.where(params)
-      api.get("users", params).body.map! do |user_attrs|
-        User.new(user_attrs)
-      end
-    end
-
-    # department_id, first_name, last_name, user_name, email_address, password are required
-    def self.create(department_id:, first_name:, last_name:, user_name:, email_address:, password:)
-      api.post("users", params).body
-    end
-
-    # def enrollments(params = nil)
-    #   api.get("users/#{self.id}/enrollments", params).body.map! do |enrollment_attrs|
-    #     CourseEnrollment.new(enrollment_attrs)
-    #   end
-    # end
-
-    def find_certificate(id)
-      Certificate.new(api.get("users/#{self.id}/certificates/#{id}").body)
-    end
-
     # gets all associated courses given a collection of users
     # all calls are called in parallel
     # users are chunked in groups of 105 to keep typhoeus from getting bogged down

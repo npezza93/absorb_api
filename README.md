@@ -16,183 +16,175 @@ Full documentation can be found at [http://npezza93.github.io/absorb_api/](http:
 7. [Chapter](#chapter)
 8. [Curriculum](#curriculum)
 9. [Department](#department)
+10. [Development](#development)
 
 ## Installation
+  Add this line to your application's Gemfile:
 
-Add this line to your application's Gemfile:
+  ```ruby
+  gem 'absorb_api'
+  ```
 
+  And then execute:
+
+      $ bundle
+
+  Or install it yourself as:
+
+      $ gem install absorb_api
+
+  ## Configuration
+  ```ruby
+  AbsorbApi.configure do |c|
+    c.absorbuser = absorb_username
+    c.absorbpass = absorb_password
+    c.absorbkey = absorb_privatekey
+    c.url = absorb_url
+    c.ignored_course_ids = [course_ids_to_ignore]
+    c.ignored_lesson_types = [lesson_types_to_ignore]
+  end
+  ```
+
+## User
 ```ruby
-gem 'absorb_api'
-```
+# To return a collection of all available users
+AbsorbApi::User.all
 
-And then execute:
+# To find a single user by id:
+AbsorbApi::User.find(id)
 
-    $ bundle
+# To return a collection of users matching conditions
+AbsorbApi::User.where(conditions)
+# available conditions include email, username, modifiedSince, and externalId
+AbsorbApi::User.where(email: "email@gmail.com")
 
-Or install it yourself as:
+# To return a collection of enrollments for a specific user:
+user.enrollments
+# Available filters for enrollments include status and modifiedSince
+user.enrollments(status: 0, modifiedSince: DateTime.new(2016, 1, 1).to_s)
 
-    $ gem install absorb_api
+# To return a collection of all certificates awarded to a user
+user.certificates
+# To return a single certificate for a specific user
+user.find_certificate(id)
 
-## Configuration
-```ruby
-AbsorbApi.configure do |c|
-  c.absorbuser = absorb_username
-  c.absorbpass = absorb_password
-  c.absorbkey = absorb_privatekey
-  c.url = absorb_url
-  c.ignored_course_ids = [course_ids_to_ignore]
-  c.ignored_lesson_types = [lesson_types_to_ignore]
+# To return a collection of all courses available for enrollment for a user
+user.courses
+
+# To create a new user
+AbsorbApi::User.create(department_id: "department_id", first_name: "first_name", last_name: "last_name", user_name: "user_name", email_address: "email_address", password: "password")
+# or
+AbsorbApi::User.create do |user|
+  user.department_id  = "department_id"
+  user.first_name     = "first_name"
+  user.last_name      = "last_name"
+  user.user_name      = "user_name"
+  user.email_address  = "email_address"
+  user.password       = "password"
 end
 ```
 
-## User
-To return a collection of all available users:
-```ruby
-AbsorbApi::User.all
-```
-
-To find a single `User` by id:
-```ruby
-AbsorbApi::User.find(id)
-```
-
-When searching for users, you can filter by **email**, **username**, **modifiedSince**, and **externalId**:
-```ruby
-AbsorbApi::User.where(params)
-```
-
-To create a new user in Absorb LMS:
-```ruby
-AbsorbApi::User.create(department_id: DepartmentId, first_name: FirstName, last_name: LastName, user_name: UserName, email_address: EmailAddress, password: Password)
-```
-
-To return a collection of courses available for enrollment for a specific user:
-```ruby
-# user.catalog does the same thing
-user = AbsorbApi::User.find(1)
-available_courses = user.courses
-```
-
-To returns a collection of the enrollments for a specific user:
-```ruby
-user = AbsorbApi::User.find(1)
-available_enrollments = user.enrollments
-```
-
-To return a collection of certificates awarded to a specific user:
-```ruby
-user = AbsorbApi::User.find(1)
-user_certificates = user.certificates
-```
-
-To return a certificate awarded to a specific user:
-```ruby
-user = AbsorbApi::User.find(1)
-user_certificate = user.find_certificate(id)
-```
-
-To return a collection of courses available per user given a collection of users:
-```ruby
-users = AbsorbApi::User.all
-courses = AbsorbApi::User.courses_from_collection(users)
-```
+  To return a collection of courses available per user given a collection of users:
+  ```ruby
+  users = AbsorbApi::User.all
+  courses = AbsorbApi::User.courses_from_collection(users)
+  ```
 
 ## Course
-To return a collection of all available courses:
 ```ruby
+# To return a collection of all available courses
 AbsorbApi::Course.all
-```
 
-To find a single `Course` by id:
-```ruby
+# To find a single course by id
 AbsorbApi::Course.find(id)
+
+# To return a collection of courses matching conditions
+AbsorbApi::Course.where(conditions)
+# available conditions include modifiedSince and externalId
+AbsorbApi::Course.where(modifiedSince: DateTime.new(2016,1,1).to_s)
+
+# To return a collection of enrollments for a specific course:
+course.enrollments
+# Available filters for enrollments include status and modifiedSince
+course.enrollments(status: 0, modifiedSince: DateTime.new(2016, 1, 1).to_s)
+
+# To return a collection of all certificates awarded to a user
+course.certificates
+# Available filters for certificates include includeExpired, acquiredDate, and expiryDate
+course.certificates(includeExpired: true)
+# To return a single certificate for a specific course
+course.find_certificate(id)
+
+# To return a collection of chapters for a specific course
+course.chapters
+# To return a single chapters for a specific course
+course.find_chapter(id)
 ```
 
-When searching for courses, you can filter by **modifiedSince**, and **externalId**:
-```ruby
-AbsorbApi::Course.where(modified_since: modifiedSince, external_id: externalId)
-```
-
-To return a collection of enrollments for a specific course:
-```ruby
-# available filters include status and modified_since
-course = AbsorbApi::Course.find(1)
-course_enrollments = course.enrollments
-```
-
-To return a collection of certificates for a specific course:
-```ruby
-# available filters include include_expired, acquired_date, and expiry_date
-course = AbsorbApi::Course.find(1)
-course_certificates = course.certificates
-```
-
-To return a collection of chapters for a specific course:
-```ruby
-course = AbsorbApi::Course.find(1)
-course_certificates = course.chapters
-```
-
-To return a chapter of a specific course:
-```ruby
-course = AbsorbApi::Course.find(1)
-course_chapter = course.find_chapter(id)
-```
-
-To return a collection of associated enrollments given a collection of courses
-```ruby
-AbsorbApi::Course.enrollments_from_collection(AbsorbApi::Course.all)
-```
+  To return a collection of associated enrollments given a collection of courses
+  ```ruby
+  AbsorbApi::Course.enrollments_from_collection(AbsorbApi::Course.all)
+  ```
 
 ## Category
-To return a collection of all available categories:
 ```ruby
+# To return a collection of all available categories
 AbsorbApi::Category.all
-```
 
-To find a single `Category` by id:
-```ruby
+# To find a single category by id:
 AbsorbApi::Category.find(id)
 ```
 
 ## Certificate
-To find a single `Certificate` by id:
 ```ruby
+# To find a single certificate by id
 AbsorbApi::Certificate.find(id)
 ```
 
 ## Chapter
-To return a collection of all available chapters:
 ```ruby
+# To return a collection of all available chapters
 AbsorbApi::Chapter.all
-```
 
-To find a single `Chapter` by id:
-```ruby
+# To find a single chapter by id
 AbsorbApi::Chapter.find(id)
 ```
 
 ## Curriculum
-To return a collection of all available curriculums:
 ```ruby
+# To return a collection of all available curriculums
 AbsorbApi::Curriculum.all
-```
 
-To find a single `Curriculum` by id:
-```ruby
+# To find a single curriculum by id
 AbsorbApi::Curriculum.find(id)
+
+# To return the related category
+curriculum.category
 ```
 
 ## Department
-To return a collection of all available departments:
 ```ruby
-# available filters include department_name, and external_id
+# To return a collection of all available departments
 AbsorbApi::Department.all
-```
 
-To find a single `Department` by id:
-```ruby
+# To find a single department by id
 AbsorbApi::Department.find(id)
+
+# To return a collection of departments matching conditions
+AbsorbApi::Department.where(conditions)
+# available conditions include departmentName, and externalId
+AbsorbApi::Department.where(departmentName: "Technology")
+
+# To return the parent department
+department.parent
+
+# To create a new department
+AbsorbApi::Department.create(name: "Test Department", parent_id: 1)
+# or
+AbsorbApi::Department.create do |department|
+  department.name = "Test Department"
+  department.parent_id = 1
+end
 ```
 
 ## Development

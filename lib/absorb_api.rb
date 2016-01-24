@@ -7,6 +7,7 @@ require 'active_model'
 
 require "absorb_api/orm"
 require "absorb_api/relations"
+require "absorb_api/collection"
 
 require "absorb_api/version"
 require "absorb_api/configuration"

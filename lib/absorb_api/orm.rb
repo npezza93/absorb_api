@@ -1,6 +1,7 @@
 module AbsorbApi
   class ResourceNotFound < StandardError; end
   class RouteNotFound < StandardError; end
+  class ValidationError < StandardError; end
 
   module Orm
     extend ActiveSupport::Concern
@@ -13,8 +14,13 @@ module AbsorbApi
       end
 
       def all
-        Base.api.get("#{to_s.demodulize.pluralize}").body.map! do |attributes|
-          new(attributes)
+        response = Base.api.get("#{to_s.demodulize.pluralize}")
+        if response.status == 404
+          raise RouteNotFound
+        else
+          Collection.new( response.body.map! do |attributes|
+            new(attributes)
+          end, {klass: to_s.demodulize } )
         end
       end
     end
