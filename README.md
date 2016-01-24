@@ -9,14 +9,15 @@ Full documentation can be found at [http://npezza93.github.io/absorb_api/](http:
 ## Table of Contents
 1. [Installation](#installation)
 2. [Configuration](#configuration)
-3. [User](#user)
-4. [Course](#course)
-5. [Category](#category)
-6. [Certificate](#certificate)
-7. [Chapter](#chapter)
-8. [Curriculum](#curriculum)
-9. [Department](#department)
-10. [Development](#development)
+3. [Models](#models)
+  * [User](#user)
+  * [Course](#course)
+  * [Category](#category)
+  * [Certificate](#certificate)
+  * [Chapter](#chapter)
+  * [Curriculum](#curriculum)
+  * [Department](#department)
+4. [Development](#development)
 
 ## Installation
   Add this line to your application's Gemfile:
@@ -45,7 +46,9 @@ Full documentation can be found at [http://npezza93.github.io/absorb_api/](http:
   end
   ```
 
-## User
+## Models
+
+### User
 ```ruby
 # To return a collection of all available users
 AbsorbApi::User.all
@@ -90,7 +93,7 @@ end
   courses = AbsorbApi::User.courses_from_collection(users)
   ```
 
-## Course
+### Course
 ```ruby
 # To return a collection of all available courses
 AbsorbApi::Course.all
@@ -126,7 +129,7 @@ course.find_chapter(id)
   AbsorbApi::Course.enrollments_from_collection(AbsorbApi::Course.all)
   ```
 
-## Category
+### Category
 ```ruby
 # To return a collection of all available categories
 AbsorbApi::Category.all
@@ -135,13 +138,13 @@ AbsorbApi::Category.all
 AbsorbApi::Category.find(id)
 ```
 
-## Certificate
+### Certificate
 ```ruby
 # To find a single certificate by id
 AbsorbApi::Certificate.find(id)
 ```
 
-## Chapter
+### Chapter
 ```ruby
 # To return a collection of all available chapters
 AbsorbApi::Chapter.all
@@ -150,7 +153,7 @@ AbsorbApi::Chapter.all
 AbsorbApi::Chapter.find(id)
 ```
 
-## Curriculum
+### Curriculum
 ```ruby
 # To return a collection of all available curriculums
 AbsorbApi::Curriculum.all
@@ -162,7 +165,7 @@ AbsorbApi::Curriculum.find(id)
 curriculum.category
 ```
 
-## Department
+### Department
 ```ruby
 # To return a collection of all available departments
 AbsorbApi::Department.all
