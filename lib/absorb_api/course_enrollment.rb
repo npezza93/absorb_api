@@ -1,7 +1,5 @@
 module AbsorbApi
   class CourseEnrollment < Base
-    include Relations
-
     attr_accessor :id, :course_id, :course_name, :course_version_id, :user_id, :full_name, :status, :progress, :score, :accepted_terms_and_conditions, :time_spent, :date_started, :date_completed, :enrollment_key_id, :certificate_id, :credits
 
     def lessons(**conditions)

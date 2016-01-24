@@ -17,6 +17,8 @@ Full documentation can be found at [http://npezza93.github.io/absorb_api/](http:
   * [Chapter](#chapter)
   * [Curriculum](#curriculum)
   * [Department](#department)
+  * [CourseEnrollment](#courseenrollment)
+  * [LessonEnrollment](#lessonenrollment)
 4. [Development](#development)
 
 ## Installation
@@ -85,13 +87,10 @@ AbsorbApi::User.create do |user|
   user.email_address  = "email_address"
   user.password       = "password"
 end
-```
 
-  To return a collection of courses available per user given a collection of users:
-  ```ruby
-  users = AbsorbApi::User.all
-  courses = AbsorbApi::User.courses_from_collection(users)
-  ```
+# To return a collection of courses available per user given a collection of users
+courses = AbsorbApi::User.courses_from_collection(users)
+```
 
 ### Course
 ```ruby
@@ -122,12 +121,11 @@ course.find_certificate(id)
 course.chapters
 # To return a single chapters for a specific course
 course.find_chapter(id)
-```
 
-  To return a collection of associated enrollments given a collection of courses
-  ```ruby
-  AbsorbApi::Course.enrollments_from_collection(AbsorbApi::Course.all)
-  ```
+# To return a collection of associated enrollments given a collection of courses
+# Available conditions include modifiedSince and status
+AbsorbApi::Course.enrollments_from_collection(courses, modifiedSince: DateTime.new(2016, 1, 1))
+```
 
 ### Category
 ```ruby
@@ -186,6 +184,20 @@ AbsorbApi::Department.create do |department|
   department.parent_id = 1
 end
 ```
+
+### CourseEnrollment
+```ruby
+# To return a collection of associated lessons matching conditions
+# Available conditions are modifiedSince and status
+course_enrollment.lessons
+
+# To return a collection of associated enrollments given a collection of courses
+# Available conditions include modifiedSince and status
+AbsorbApi::CourseEnrollment.lessons_from_collection(course_enrollments, modifiedSince: DateTime.new(2016, 1, 1))
+```
+
+### LessonEnrollment
+
 
 ## Development
 
