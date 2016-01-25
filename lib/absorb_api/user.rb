@@ -8,16 +8,16 @@ module AbsorbApi
     has_many :enrollments, klass: :course_enrollment
     has_many :certificates
     has_many :resources
-    
+
     # gets all associated courses given a collection of users
     # all calls are called in parallel
     # users are chunked in groups of 105 to keep typhoeus from getting bogged down
     def self.courses_from_collection(users)
       courses = []
       users.each_slice(105) do |user_slice|
-        api.in_parallel do
+        AbsorbApi.api.in_parallel do
           user_slice.each do |user|
-            courses << api.get("users/#{user.id}/courses")
+            courses << AbsorbApi.api.get("users/#{user.id}/courses")
           end
         end
       end

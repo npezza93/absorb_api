@@ -9,7 +9,7 @@ module AbsorbApi
     class_methods do
       def find(id)
         raise ResourceNotFound if id.blank?
-        response = Base.api.get("#{to_s.demodulize.pluralize}/#{id}")
+        response = AbsorbApi.api.get("#{to_s.demodulize.pluralize}/#{id}")
         if response.status == 404
           raise(RouteNotFound)
         elsif response.status == 400
@@ -20,7 +20,7 @@ module AbsorbApi
       end
 
       def all
-        response = Base.api.get("#{to_s.demodulize.pluralize}")
+        response = AbsorbApi.api.get("#{to_s.demodulize.pluralize}")
         if response.status == 404
           raise RouteNotFound
         elsif response.status == 400

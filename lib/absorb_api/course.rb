@@ -10,14 +10,14 @@ module AbsorbApi
     has_many :resources
     has_many :prerequisites
     has_many :lessons
-    
+
     # gets all associated enrollments given a collection of courses
     # all calls are called in parallel
     def self.enrollments_from_collection(courses, **conditions)
       enrollments = []
-      api.in_parallel do
+      AbsorbApi.api.in_parallel do
         courses.reject { |course| AbsorbApi.configuration.ignored_course_ids.include? course.id }.each do |course|
-          enrollments << api.get("courses/#{course.id}/enrollments", conditions)
+          enrollments << AbsorbApi.api.get("courses/#{course.id}/enrollments", conditions)
         end
       end
       enrollments.map { |response| response.body.map { |attrs| CourseEnrollment.new(attrs) } }.flatten

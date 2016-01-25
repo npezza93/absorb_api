@@ -3,7 +3,7 @@ module AbsorbApi
     attr_accessor :id, :course_id, :course_name, :course_version_id, :user_id, :full_name, :status, :progress, :score, :accepted_terms_and_conditions, :time_spent, :date_started, :date_completed, :enrollment_key_id, :certificate_id, :credits
 
     def lessons(**conditions)
-      api.get("users/#{self.user_id}/enrollments/#{self.course_id}/lessons", conditions).body.map! do |lesson_attributes|
+      AbsorbApi.api.get("users/#{self.user_id}/enrollments/#{self.course_id}/lessons", conditions).body.map! do |lesson_attributes|
         LessonEnrollment.new(lesson_attributes)
       end
     end
@@ -15,9 +15,9 @@ module AbsorbApi
     def self.lessons_from_collection(course_enrollments, **filters)
       lessons = []
       course_enrollments.each_slice(105) do |enrollment_slice|
-        api.in_parallel do
+        AbsorbApi.api.in_parallel do
           enrollment_slice.each do |enrollment|
-            lessons << api.get("users/#{enrollment.user_id}/enrollments/#{enrollment.course_id}/lessons", filters)
+            lessons << AbsorbApi.api.get("users/#{enrollment.user_id}/enrollments/#{enrollment.course_id}/lessons", filters)
           end
         end
       end
