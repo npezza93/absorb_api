@@ -185,13 +185,13 @@
   <span class="ruby-identifier">klass</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">rel_name</span>
 
   <span class="ruby-identifier">define_method</span> <span class="ruby-node">&quot;#{rel_name.to_s}&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-operator">**</span><span class="ruby-identifier">conditions</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">Base</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}&quot;</span>, <span class="ruby-identifier">conditions</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attributes</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}&quot;</span>, <span class="ruby-identifier">conditions</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attributes</span><span class="ruby-operator">|</span>
       <span class="ruby-node">&quot;AbsorbApi::#{klass.to_s.classify}&quot;</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">attributes</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">define_method</span> <span class="ruby-node">&quot;find_#{rel_name.to_s.singularize}&quot;</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">child_id</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">response</span> = <span class="ruby-constant">Base</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}/#{child_id}&quot;</span>)
+    <span class="ruby-identifier">response</span> = <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}/#{child_id}&quot;</span>)
     <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">400</span>
       <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResourceNotFound</span>
     <span class="ruby-keyword">else</span>
@@ -200,7 +200,7 @@
   <span class="ruby-keyword">end</span>
 
   <span class="ruby-identifier">define_method</span> <span class="ruby-node">&quot;#{rel_name.to_s.singularize}_ids&quot;</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-constant">Base</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}&quot;</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attributes</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}&quot;</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attributes</span><span class="ruby-operator">|</span>
       <span class="ruby-node">&quot;AbsorbApi::#{klass.to_s.classify}&quot;</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">attributes</span>)
     <span class="ruby-keyword">end</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:id</span>)
   <span class="ruby-keyword">end</span>
@@ -239,7 +239,7 @@
   <span class="ruby-identifier">klass</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">rel_name</span>
 
   <span class="ruby-identifier">define_method</span> <span class="ruby-node">&quot;#{rel_name.to_s}&quot;</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-node">&quot;AbsorbApi::#{klass.to_s.classify}&quot;</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Base</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{klass.to_s.pluralize}/&quot;</span><span class="ruby-operator">+</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">rel_name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;_id&quot;</span>)).<span class="ruby-identifier">body</span>)
+    <span class="ruby-node">&quot;AbsorbApi::#{klass.to_s.classify}&quot;</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{klass.to_s.pluralize}/&quot;</span><span class="ruby-operator">+</span> <span class="ruby-identifier">send</span>(<span class="ruby-identifier">rel_name</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot;_id&quot;</span>)).<span class="ruby-identifier">body</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -273,7 +273,7 @@
           <div class="method-source-code" id="where-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/relations.rb, line 39</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">where</span>(<span class="ruby-operator">**</span><span class="ruby-identifier">conditions</span>)
-  <span class="ruby-constant">Collection</span>.<span class="ruby-identifier">new</span>( <span class="ruby-constant">Base</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{to_s.demodulize.pluralize}&quot;</span>, <span class="ruby-identifier">conditions</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attributes</span><span class="ruby-operator">|</span>
+  <span class="ruby-constant">Collection</span>.<span class="ruby-identifier">new</span>( <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{to_s.demodulize.pluralize}&quot;</span>, <span class="ruby-identifier">conditions</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attributes</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">new</span>(<span class="ruby-identifier">attributes</span>)
   <span class="ruby-keyword">end</span>, {<span class="ruby-identifier">klass</span><span class="ruby-operator">:</span> <span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">demodulize</span> } )
 <span class="ruby-keyword">end</span></pre>

@@ -579,9 +579,9 @@ getting bogged down</p>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">courses_from_collection</span>(<span class="ruby-identifier">users</span>)
   <span class="ruby-identifier">courses</span> = []
   <span class="ruby-identifier">users</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">105</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user_slice</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
       <span class="ruby-identifier">user_slice</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">courses</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{user.id}/courses&quot;</span>)
+        <span class="ruby-identifier">courses</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{user.id}/courses&quot;</span>)
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>

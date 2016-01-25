@@ -133,7 +133,7 @@
           <div class="method-source-code" id="all-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/orm.rb, line 22</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">all</span>
-  <span class="ruby-identifier">response</span> = <span class="ruby-constant">Base</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{to_s.demodulize.pluralize}&quot;</span>)
+  <span class="ruby-identifier">response</span> = <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{to_s.demodulize.pluralize}&quot;</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">404</span>
     <span class="ruby-identifier">raise</span> <span class="ruby-constant">RouteNotFound</span>
   <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">400</span>
@@ -176,7 +176,7 @@
             <pre><span class="ruby-comment"># File lib/absorb_api/orm.rb, line 10</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
   <span class="ruby-identifier">raise</span> <span class="ruby-constant">ResourceNotFound</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">id</span>.<span class="ruby-identifier">blank?</span>
-  <span class="ruby-identifier">response</span> = <span class="ruby-constant">Base</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{to_s.demodulize.pluralize}/#{id}&quot;</span>)
+  <span class="ruby-identifier">response</span> = <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;#{to_s.demodulize.pluralize}/#{id}&quot;</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">404</span>
     <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RouteNotFound</span>)
   <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">status</span> <span class="ruby-operator">==</span> <span class="ruby-value">400</span>

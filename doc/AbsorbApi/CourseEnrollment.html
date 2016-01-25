@@ -349,9 +349,9 @@ typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">lessons_from_collection</span>(<span class="ruby-identifier">course_enrollments</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">filters</span>)
   <span class="ruby-identifier">lessons</span> = []
   <span class="ruby-identifier">course_enrollments</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">105</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment_slice</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
       <span class="ruby-identifier">enrollment_slice</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">lessons</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{enrollment.user_id}/enrollments/#{enrollment.course_id}/lessons&quot;</span>, <span class="ruby-identifier">filters</span>)
+        <span class="ruby-identifier">lessons</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{enrollment.user_id}/enrollments/#{enrollment.course_id}/lessons&quot;</span>, <span class="ruby-identifier">filters</span>)
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
@@ -396,7 +396,7 @@ typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
           <div class="method-source-code" id="lessons-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/course_enrollment.rb, line 5</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lessons</span>(<span class="ruby-operator">**</span><span class="ruby-identifier">conditions</span>)
-  <span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{self.user_id}/enrollments/#{self.course_id}/lessons&quot;</span>, <span class="ruby-identifier">conditions</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">lesson_attributes</span><span class="ruby-operator">|</span>
+  <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{self.user_id}/enrollments/#{self.course_id}/lessons&quot;</span>, <span class="ruby-identifier">conditions</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">lesson_attributes</span><span class="ruby-operator">|</span>
     <span class="ruby-constant">LessonEnrollment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">lesson_attributes</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
