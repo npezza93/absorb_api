@@ -47,7 +47,7 @@ module AbsorbApi
         yield object if block_given?
         attrs = JSON.parse(object.to_json)
         attrs.keys.each { |k| attrs[ k.camelize ] = attrs.delete(k) }
-        response = Base.api.post("#{to_s.demodulize.pluralize}", attrs)
+        response = AbsorbApi.api.post("#{to_s.demodulize.pluralize}", attrs)
         if response.status == 500
           raise ValidationError
         elsif response.status == 405
