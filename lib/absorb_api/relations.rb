@@ -7,13 +7,13 @@ module AbsorbApi
         klass ||= rel_name
 
         define_method "#{rel_name.to_s}" do |**conditions|
-          AbsorbApi.api.get("#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}", conditions).body.map! do |attributes|
+          AbsorbApi::Api.new.connection.get("#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}", conditions).body.map! do |attributes|
             "AbsorbApi::#{klass.to_s.classify}".constantize.new(attributes)
           end
         end
 
         define_method "find_#{rel_name.to_s.singularize}" do |child_id|
-          response = AbsorbApi.api.get("#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}/#{child_id}")
+          response = AbsorbApi::Api.new.connection.get("#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}/#{child_id}")
           if response.status == 400
             raise ResourceNotFound
           else
@@ -22,7 +22,7 @@ module AbsorbApi
         end
 
         define_method "#{rel_name.to_s.singularize}_ids" do
-          AbsorbApi.api.get("#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}").body.map! do |attributes|
+          AbsorbApi::Api.new.connection.get("#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name.to_s}").body.map! do |attributes|
             "AbsorbApi::#{klass.to_s.classify}".constantize.new(attributes)
           end.map(&:id)
         end
@@ -32,12 +32,12 @@ module AbsorbApi
         klass ||= rel_name
 
         define_method "#{rel_name.to_s}" do
-          "AbsorbApi::#{klass.to_s.classify}".constantize.new(AbsorbApi.api.get("#{klass.to_s.pluralize}/"+ send(rel_name.to_s + "_id")).body)
+          "AbsorbApi::#{klass.to_s.classify}".constantize.new(AbsorbApi::Api.new.connection.get("#{klass.to_s.pluralize}/"+ send(rel_name.to_s + "_id")).body)
         end
       end
 
       def where(**conditions)
-        Collection.new( AbsorbApi.api.get("#{to_s.demodulize.pluralize}", conditions).body.map! do |attributes|
+        Collection.new( AbsorbApi::Api.new.connection.get("#{to_s.demodulize.pluralize}", conditions).body.map! do |attributes|
           new(attributes)
         end, {klass: to_s.demodulize } )
       end
@@ -47,7 +47,7 @@ module AbsorbApi
         yield object if block_given?
         attrs = JSON.parse(object.to_json)
         attrs.keys.each { |k| attrs[ k.camelize ] = attrs.delete(k) }
-        response = AbsorbApi.api.post("#{to_s.demodulize.pluralize}", attrs)
+        response = AbsorbApi::Api.new.connection.post("#{to_s.demodulize.pluralize}", attrs)
         if response.status == 500
           raise ValidationError
         elsif response.status == 405

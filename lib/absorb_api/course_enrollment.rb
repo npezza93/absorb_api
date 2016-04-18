@@ -3,7 +3,7 @@ module AbsorbApi
     attr_accessor :id, :course_id, :course_name, :course_version_id, :user_id, :full_name, :status, :progress, :score, :accepted_terms_and_conditions, :time_spent, :date_started, :date_completed, :enrollment_key_id, :certificate_id, :credits
 
     def lessons(**conditions)
-      AbsorbApi.api.get("users/#{self.user_id}/enrollments/#{self.course_id}/lessons", conditions).body.map! do |lesson_attributes|
+      AbsorbApi::Api.new.connection.get("users/#{self.user_id}/enrollments/#{self.course_id}/lessons", conditions).body.map! do |lesson_attributes|
         LessonEnrollment.new(lesson_attributes)
       end
     end
@@ -14,14 +14,22 @@ module AbsorbApi
     # modifiedSince must be a DateTime object
     def self.lessons_from_collection(course_enrollments, **filters)
       lessons = []
+      connection = AbsorbApi::Api.new.connection
       course_enrollments.each_slice(105) do |enrollment_slice|
-        AbsorbApi.api.in_parallel do
+        connection.in_parallel do
           enrollment_slice.each do |enrollment|
-            lessons << AbsorbApi.api.get("users/#{enrollment.user_id}/enrollments/#{enrollment.course_id}/lessons", filters)
+            lessons << connection.get("users/#{enrollment.user_id}/enrollments/#{enrollment.course_id}/lessons", filters)
           end
         end
       end
-      lessons.map { |response| response.body.map { |body| LessonEnrollment.new(body) } }.flatten.reject { |lesson| AbsorbApi.configuration.ignored_lesson_types.include? lesson.type }
+      lessons.map! do |response|
+        response.body.map do |body|
+          LessonEnrollment.new(body)
+        end
+      end
+      lessons.flatten.reject do |lesson|
+        AbsorbApi.configuration.ignored_lesson_types.include? lesson.type
+      end
     end
   end
 end

@@ -2,7 +2,13 @@ module AbsorbApi
   class Course < Base
     include Relations
 
-    attr_accessor :id, :name, :description, :notes, :external_id, :access_date, :expire_type, :expire_duration, :expiry_date, :active_status, :tag_ids, :resource_ids, :editor_ids, :prices, :competency_definition_ids, :prerequisite_course_ids, :post_enrollment_course_ids, :allow_course_evaluation, :category_id, :certificate_url, :audience, :goals, :vendor, :company_cost, :learner_cost, :company_time, :learner_time
+    attr_accessor :id, :name, :description, :notes, :external_id, :access_date,
+                  :expire_type, :expire_duration, :expiry_date, :active_status,
+                  :tag_ids, :resource_ids, :editor_ids, :prices,
+                  :competency_definition_ids, :prerequisite_course_ids,
+                  :post_enrollment_course_ids, :allow_course_evaluation,
+                  :category_id, :certificate_url, :audience, :goals, :vendor,
+                  :company_cost, :learner_cost, :company_time, :learner_time
 
     has_many :certificates
     has_many :chapters
@@ -15,9 +21,14 @@ module AbsorbApi
     # all calls are called in parallel
     def self.enrollments_from_collection(courses, **conditions)
       enrollments = []
-      AbsorbApi.api.in_parallel do
-        courses.reject { |course| AbsorbApi.configuration.ignored_course_ids.include? course.id }.each do |course|
-          enrollments << AbsorbApi.api.get("courses/#{course.id}/enrollments", conditions)
+      connection = AbsorbApi::Api.new.connection
+      courses.reject! do |course|
+        AbsorbApi.configuration.ignored_course_ids.include? course.id
+      end
+
+      connection.in_parallel do
+        courses.each do |course|
+          enrollments << connection.get("courses/#{course.id}/enrollments", conditions)
         end
       end
       enrollments.map { |response| response.body.map { |attrs| CourseEnrollment.new(attrs) } }.flatten

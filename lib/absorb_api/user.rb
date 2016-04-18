@@ -21,7 +21,7 @@ module AbsorbApi
       attrs.keys.each { |k| attrs[k.to_s.camelize] = attrs.delete(k) }
       attrs['Username'] = username
 
-      response = AbsorbApi.api.put("users/#{id}", attrs)
+      response = AbsorbApi::Api.new.connection.put("users/#{id}", attrs)
       raise ValidationError if response.status == 500
       raise RouteNotFound if response.status == 405
 
@@ -33,14 +33,17 @@ module AbsorbApi
     # users are chunked in groups of 105 to keep typhoeus from bogging down
     def self.courses_from_collection(users)
       courses = []
+      connection = AbsorbApi::Api.new.connection
       users.each_slice(105) do |user_slice|
-        AbsorbApi.api.in_parallel do
+        connection.in_parallel do
           user_slice.each do |user|
-            courses << AbsorbApi.api.get("users/#{user.id}/courses")
+            courses << connection.get("users/#{user.id}/courses")
           end
         end
       end
-      courses.map { |response| response.body.map { |body| Course.new(body) } }.flatten
+      courses.map do |response|
+        response.body.map { |body| Course.new(body) }
+      end.flatten
     end
   end
 end

@@ -9,7 +9,7 @@ module AbsorbApi
     class_methods do
       def find(id)
         raise ResourceNotFound if id.blank?
-        response = AbsorbApi.api.get("#{to_s.demodulize.pluralize}/#{id}")
+        response = AbsorbApi::Api.new.connection.get("#{to_s.demodulize.pluralize}/#{id}")
         if response.status == 404
           raise(RouteNotFound)
         elsif response.status == 400
@@ -20,15 +20,15 @@ module AbsorbApi
       end
 
       def all
-        response = AbsorbApi.api.get("#{to_s.demodulize.pluralize}")
+        response = AbsorbApi::Api.new.connection.get(to_s.demodulize.pluralize)
         if response.status == 404
           raise RouteNotFound
         elsif response.status == 400
           raise ResourceNotFound
         else
-          Collection.new( response.body.map! do |attributes|
+          Collection.new(response.body.map! do |attributes|
             new(attributes)
-          end, {klass: to_s.demodulize } )
+          end, klass: to_s.demodulize)
         end
       end
     end
