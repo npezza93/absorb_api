@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AbsorbApi
   class Tag < Base
     include Relations

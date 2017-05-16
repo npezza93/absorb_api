@@ -1,12 +1,5 @@
-source 'https://rubygems.org'
+# frozen_string_literal: true
 
-# Specify your gem's dependencies in absorb_api.gemspec
+source "https://rubygems.org"
+
 gemspec
-
-gem 'faraday'
-gem 'typhoeus'
-gem 'json'
-gem 'faraday_middleware'
-gem 'activesupport'
-gem 'activemodel'
-gem 'pry'

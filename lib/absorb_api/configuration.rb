@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AbsorbApi
   class Configuration
     attr_accessor :url, :absorbuser, :absorbpass, :absorbkey, :ignored_lesson_types, :ignored_course_ids

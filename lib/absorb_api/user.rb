@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AbsorbApi
   class User < Base
     include Relations
@@ -19,7 +21,7 @@ module AbsorbApi
 
     def update(attrs)
       attrs.keys.each { |k| attrs[k.to_s.camelize] = attrs.delete(k) }
-      attrs['Username'] = username
+      attrs["Username"] = username
 
       response = AbsorbApi::Api.new.connection.put("users/#{id}", attrs)
       raise ValidationError if response.status == 500

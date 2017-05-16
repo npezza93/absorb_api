@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AbsorbApi
   class Api
     attr_reader :connection, :token
@@ -9,7 +11,7 @@ module AbsorbApi
         faraday.request :json
         faraday.response :json, content_type: /\bjson$/
         faraday.adapter :typhoeus
-        faraday.headers = { 'Authorization' => @token }
+        faraday.headers = { "Authorization" => @token }
       end
     end
   end
