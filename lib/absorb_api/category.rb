@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AbsorbApi
-  class Category < Base
+  class Category < Record
     attr_accessor :id, :parent_id, :name, :description
   end
 end

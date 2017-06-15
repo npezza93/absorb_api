@@ -4,59 +4,57 @@ module AbsorbApi
   module Relations
     extend ActiveSupport::Concern
 
-    class_methods do
-      def has_many(rel_name, klass = nil)
+    module ClassMethods
+      def with_many(rel_name, klass = nil)
         klass ||= rel_name
+        klass = klass.to_s
 
-        define_method rel_name.to_s do |**conditions|
-          AbsorbApi::Api.new.connection.get("#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name}", conditions).body.map! do |attributes|
-            "AbsorbApi::#{klass.to_s.classify}".constantize.new(attributes)
-          end
-        end
-
-        define_method "find_#{rel_name.to_s.singularize}" do |child_id|
-          response = AbsorbApi::Api.new.connection.get("#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name}/#{child_id}")
-          if response.status == 400
-            raise ResourceNotFound
-          else
-            "AbsorbApi::#{klass.to_s.classify}".constantize.new(response.body)
-          end
-        end
-
-        define_method "#{rel_name.to_s.singularize}_ids" do
-          AbsorbApi::Api.new.connection.get("#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name}").body.map! do |attributes|
-            "AbsorbApi::#{klass.to_s.classify}".constantize.new(attributes)
-          end.map(&:id)
-        end
+        define_has_many_method(rel_name, klass)
+        define_has_many_finder_method(rel_name, klass)
+        define_has_many_ids_method(rel_name, klass)
       end
 
-      def has_one(rel_name, klass = nil)
+      def with_one(rel_name, klass = nil)
         klass ||= rel_name
+        klass = klass.to_s
 
         define_method rel_name.to_s do
-          "AbsorbApi::#{klass.to_s.classify}".constantize.new(AbsorbApi::Api.new.connection.get("#{klass.to_s.pluralize}/" + send(rel_name.to_s + "_id")).body)
+          path = "#{klass.pluralize}/" + send(rel_name.to_s + "_id")
+
+          "AbsorbApi::#{klass.classify}".constantize.new(api.get(path))
         end
       end
 
-      def where(**conditions)
-        Collection.new(AbsorbApi::Api.new.connection.get(to_s.demodulize.pluralize.to_s, conditions).body.map! do |attributes|
-          new(attributes)
-        end, {klass: to_s.demodulize })
+      private
+
+      def define_has_many_method(rel_name, klass)
+        define_method rel_name.to_s do |**conditions|
+          path = "#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name}"
+
+          get(path, conditions).map do |attrs|
+            "AbsorbApi::#{klass.classify}".constantize.new(attrs)
+          end
+        end
       end
 
-      def create(attributes = [])
-        object = to_s.classify.constantize.new(attributes)
-        yield object if block_given?
-        attrs = JSON.parse(object.to_json)
-        attrs.keys.each { |k| attrs[ k.camelize ] = attrs.delete(k) }
-        response = AbsorbApi::Api.new.connection.post(to_s.demodulize.pluralize.to_s, attrs)
-        if response.status == 500
-          raise ValidationError
-        elsif response.status == 405
-          raise RouteNotFound
-        else
-          object.id = response.body["Id"]
-          object
+      def define_has_many_finder_method(rel_name, klass)
+        define_method "find_#{rel_name.to_s.singularize}" do |child_id|
+          response = get(
+            "#{self.class.to_s.demodulize.pluralize}/#{id}/"\
+            "#{rel_name}/#{child_id}"
+          )
+
+          "AbsorbApi::#{klass.classify}".constantize.new(response)
+        end
+      end
+
+      def define_has_many_ids_method(rel_name, klass)
+        define_method "#{rel_name.to_s.singularize}_ids" do
+          path = "#{self.class.to_s.demodulize.pluralize}/#{id}/#{rel_name}"
+
+          get(path).map do |attrs|
+            "AbsorbApi::#{klass.classify}".constantize.new(attrs)
+          end.map(&:id)
         end
       end
     end

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 module AbsorbApi
-  class Tag < Base
-    include Relations
-    
+  class Tag < Record
+    with_relationships
+    can_create
+
     attr_accessor :id, :name
   end
 end

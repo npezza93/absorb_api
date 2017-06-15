@@ -7,13 +7,14 @@ require "faraday_middleware"
 require "active_support/all"
 require "active_model"
 
-require "absorb_api/orm"
 require "absorb_api/relations"
+require "absorb_api/create"
+require "absorb_api/where"
 require "absorb_api/collection"
 
 require "absorb_api/version"
 require "absorb_api/configuration"
-require "absorb_api/base"
+require "absorb_api/record"
 require "absorb_api/user"
 require "absorb_api/course"
 require "absorb_api/course_enrollment"
@@ -33,4 +34,13 @@ require "absorb_api/authorize"
 require "absorb_api/api"
 
 module AbsorbApi
+  class ResourceNotFound < StandardError; end
+  class RouteNotFound < StandardError; end
+  class ValidationError < StandardError; end
+
+  def self.token
+    @authorization ||= Authorize.new
+
+    @authorization.token
+  end
 end
