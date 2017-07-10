@@ -17,7 +17,7 @@ module AbsorbApi
                   :string1, :decimal1, :string2, :decimal3, :job_title
 
     with_many :courses
-    with_many :enrollments, klass: :course_enrollment
+    with_many :enrollments, :course_enrollment
     with_many :certificates
     with_many :resources
 
