@@ -38,9 +38,11 @@ module AbsorbApi
   class RouteNotFound < StandardError; end
   class ValidationError < StandardError; end
 
-  def self.token
-    @authorization ||= Authorize.new
+  cattr_accessor :authorization
 
-    @authorization.token
+  def self.token
+    self.authorization ||= Authorize.new
+
+    self.authorization.token
   end
 end

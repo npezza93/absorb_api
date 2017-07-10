@@ -7,7 +7,7 @@ module AbsorbApi
     delegate :get, :put, :patch, :post, :delete, to: :connection
 
     def connection
-      @connection ||= Faraday.new(
+      Faraday.new(
         url: AbsorbApi.configuration.url,
         parallel_manager: Typhoeus::Hydra.new(max_concurrency: 200)
       ) do |faraday|
@@ -42,12 +42,25 @@ module AbsorbApi
 
     def request(http_method, path, params)
       response = connection.send(http_method, path, params)
+      handle_errored_response(response)
 
+      if response.status == 401
+        response = fetch_new_token_and_try_again(http_method, path, params)
+        handle_errored_response(response)
+      end
+
+      response.body
+    end
+
+    def fetch_new_token_and_try_again(http_method, path, params)
+      AbsorbApi.authorization = nil
+      connection.send(http_method, path, params)
+    end
+
+    def handle_errored_response(response)
       raise RouteNotFound    if [404, 405].include?(response.status)
       raise ResourceNotFound if [400].include?(response.status)
       raise ValidationError  if [500].include?(response.status)
-
-      response.body
     end
   end
 end
