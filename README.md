@@ -49,8 +49,6 @@ AbsorbApi.configure do |c|
   c.absorbpass = absorb_password
   c.absorbkey = absorb_privatekey
   c.url = absorb_url
-  c.ignored_course_ids = [course_ids_to_ignore]
-  c.ignored_lesson_types = [lesson_types_to_ignore]
 end
 ```
 

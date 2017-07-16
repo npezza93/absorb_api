@@ -8,7 +8,7 @@ module AbsorbApi
                   :date_completed, :enrollment_key_id, :certificate_id, :credits
 
     def lessons(**conditions)
-      get(url, conditions).map do |attrs|
+      get(url, conditions.merge(ignore_resource_not_found: true)).map do |attrs|
         LessonEnrollment.new(attrs)
       end
     end

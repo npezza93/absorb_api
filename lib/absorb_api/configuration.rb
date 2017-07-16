@@ -2,8 +2,7 @@
 
 module AbsorbApi
   class Configuration
-    attr_accessor :url, :absorbuser, :absorbpass, :absorbkey,
-                  :ignored_lesson_types, :ignored_course_ids
+    attr_accessor :url, :absorbuser, :absorbpass, :absorbkey
   end
 
   cattr_accessor :configuration
