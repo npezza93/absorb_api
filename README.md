@@ -94,9 +94,6 @@ AbsorbApi::User.create do |user|
   user.email_address  = "email_address"
   user.password       = "password"
 end
-
-# To return a collection of courses available per user given a collection of users
-courses = AbsorbApi::User.courses_from_collection(users)
 ```
 
 ### Course
@@ -141,10 +138,6 @@ course.prerequisites
 course.lessons
 # To return a single lesson for a specific course
 course.find_lesson(id)
-
-# To return a collection of associated enrollments given a collection of courses
-# Available conditions include modifiedSince and status
-AbsorbApi::Course.enrollments_from_collection(courses, modifiedSince: DateTime.new(2016, 1, 1))
 ```
 
 ### Category
@@ -271,10 +264,6 @@ AbsorbApi::Lesson.find(id)
 # To return a collection of associated lessons matching conditions
 # Available conditions are modifiedSince and status
 course_enrollment.lessons
-
-# To return a collection of associated enrollments given a collection of courses
-# Available conditions include modifiedSince and status
-AbsorbApi::CourseEnrollment.lessons_from_collection(course_enrollments, modifiedSince: DateTime.new(2016, 1, 1))
 ```
 
 ### LessonEnrollment
