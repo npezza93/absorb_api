@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
 </script>
 
 <script src="../js/jquery.js"></script>
@@ -58,7 +59,7 @@
   <h3>Parent</h3>
 
   
-  <p class="link"><a href="Base.html">AbsorbApi::Base</a>
+  <p class="link">Record
   
 </div>
 
@@ -69,8 +70,6 @@
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    
-    <li ><a href="#method-c-lessons_from_collection">::lessons_from_collection</a>
     
     <li ><a href="#method-i-lessons">#lessons</a>
     
@@ -318,57 +317,6 @@
     
 
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
-       <header>
-         <h3>Public Class Methods</h3>
-       </header>
-
-    
-      <div id="method-c-lessons_from_collection" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">lessons_from_collection</span><span
-            class="method-args">(course_enrollments, **filters)</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          <p>gets all associated lessons given a collection of enrollments all calls are
-called in parallel enrollments are chunked in groups of 105 to keep
-typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
-          
-          
-
-          
-          <div class="method-source-code" id="lessons_from_collection-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/course_enrollment.rb, line 15</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">lessons_from_collection</span>(<span class="ruby-identifier">course_enrollments</span>, <span class="ruby-operator">**</span><span class="ruby-identifier">filters</span>)
-  <span class="ruby-identifier">lessons</span> = []
-  <span class="ruby-identifier">course_enrollments</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">105</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment_slice</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
-      <span class="ruby-identifier">enrollment_slice</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">enrollment</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">lessons</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{enrollment.user_id}/enrollments/#{enrollment.course_id}/lessons&quot;</span>, <span class="ruby-identifier">filters</span>)
-      <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">lessons</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">body</span><span class="ruby-operator">|</span> <span class="ruby-constant">LessonEnrollment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">body</span>) } }.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">lesson</span><span class="ruby-operator">|</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">ignored_lesson_types</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">lesson</span>.<span class="ruby-identifier">type</span> }
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-    </section>
-  
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
@@ -394,10 +342,10 @@ typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
 
           
           <div class="method-source-code" id="lessons-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/course_enrollment.rb, line 5</span>
+            <pre><span class="ruby-comment"># File lib/absorb_api/course_enrollment.rb, line 9</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">lessons</span>(<span class="ruby-operator">**</span><span class="ruby-identifier">conditions</span>)
-  <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{self.user_id}/enrollments/#{self.course_id}/lessons&quot;</span>, <span class="ruby-identifier">conditions</span>).<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map!</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">lesson_attributes</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">LessonEnrollment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">lesson_attributes</span>)
+  <span class="ruby-identifier">get</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">conditions</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">ignore_resource_not_found</span><span class="ruby-operator">:</span> <span class="ruby-keyword">true</span>)).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attrs</span><span class="ruby-operator">|</span>
+    <span class="ruby-constant">LessonEnrollment</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">attrs</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -418,7 +366,7 @@ typhoeus from getting bogged down modifiedSince must be a DateTime object</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Generated by <a href="https://rdoc.github.io/rdoc">RDoc</a> 5.1.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

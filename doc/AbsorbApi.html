@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
@@ -63,13 +64,13 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-api">::api</a>
-    
-    <li ><a href="#method-c-authorize">::authorize</a>
+    <li ><a href="#method-c-configuration">::configuration</a>
     
     <li ><a href="#method-c-configure">::configure</a>
     
     <li ><a href="#method-c-reset">::reset</a>
+    
+    <li ><a href="#method-c-token">::token</a>
     
   </ul>
 </div>
@@ -111,27 +112,6 @@
     
 
     
-    <section class="attribute-method-details" class="method-section">
-      <header>
-        <h3>Attributes</h3>
-      </header>
-
-      
-      <div id="attribute-c-configuration" class="method-detail">
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">configuration</span><span
-            class="attribute-access-type">[RW]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
-    </section>
-    
 
     
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
@@ -140,10 +120,10 @@
        </header>
 
     
-      <div id="method-c-api" class="method-detail ">
+      <div id="method-c-configuration" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">api</span><span
+          <span class="method-name">configuration</span><span
             class="method-args">()</span>
           
           <span class="method-click-advice">click to toggle source</span>
@@ -158,56 +138,10 @@
           
 
           
-          <div class="method-source-code" id="api-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api.rb, line 44</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">api</span>
-  <span class="ruby-ivar">@api</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Faraday</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">url</span>, <span class="ruby-value">:parallel_manager</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Typhoeus</span><span class="ruby-operator">::</span><span class="ruby-constant">Hydra</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:max_concurrency</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">200</span>)) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">faraday</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">faraday</span>.<span class="ruby-identifier">request</span> <span class="ruby-value">:json</span>
-    <span class="ruby-identifier">faraday</span>.<span class="ruby-identifier">response</span> <span class="ruby-value">:json</span>, <span class="ruby-value">:content_type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-regexp">/\bjson$/</span>
-    <span class="ruby-identifier">faraday</span>.<span class="ruby-identifier">adapter</span> <span class="ruby-value">:typhoeus</span>
-    <span class="ruby-identifier">faraday</span>.<span class="ruby-identifier">headers</span> = {<span class="ruby-string">&quot;Authorization&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">authorize</span> }
-  <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-
-        
-      </div>
-
-    
-      <div id="method-c-authorize" class="method-detail ">
-        
-        <div class="method-heading">
-          <span class="method-name">authorize</span><span
-            class="method-args">()</span>
-          
-          <span class="method-click-advice">click to toggle source</span>
-          
-        </div>
-        
-
-        <div class="method-description">
-          
-          
-          
-          
-
-          
-          <div class="method-source-code" id="authorize-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api.rb, line 32</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">authorize</span>
-  <span class="ruby-ivar">@authorize</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Faraday</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">url</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">faraday</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">faraday</span>.<span class="ruby-identifier">request</span> <span class="ruby-value">:url_encoded</span>
-    <span class="ruby-identifier">faraday</span>.<span class="ruby-identifier">response</span> <span class="ruby-value">:logger</span>
-    <span class="ruby-identifier">faraday</span>.<span class="ruby-identifier">adapter</span> <span class="ruby-value">:typhoeus</span>
-  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">post</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">req</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">req</span>.<span class="ruby-identifier">url</span> <span class="ruby-string">&#39;Authenticate&#39;</span>, { <span class="ruby-identifier">username</span><span class="ruby-operator">:</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">absorbuser</span>, <span class="ruby-identifier">password</span><span class="ruby-operator">:</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">absorbpass</span>, <span class="ruby-identifier">privateKey</span><span class="ruby-operator">:</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">absorbkey</span> }
-    <span class="ruby-identifier">req</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-string">&#39;Content-Type&#39;</span>] = <span class="ruby-string">&#39;application/json&#39;</span>
-    <span class="ruby-identifier">req</span>.<span class="ruby-identifier">headers</span>[<span class="ruby-string">&quot;accept&quot;</span>] = <span class="ruby-string">&quot;json&quot;</span>
-  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-string">&#39;\&quot;&#39;</span>)
+          <div class="method-source-code" id="configuration-source">
+            <pre><span class="ruby-comment"># File lib/absorb_api/configuration.rb, line 10</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">configuration</span>
+  <span class="ruby-ivar">@configuration</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Configuration</span>.<span class="ruby-identifier">new</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -239,7 +173,7 @@
           
           <div class="method-source-code" id="configure-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/configuration.rb, line 18</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">configure</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">configure</span>
   <span class="ruby-keyword">yield</span>(<span class="ruby-identifier">configuration</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -272,8 +206,43 @@
           
           <div class="method-source-code" id="reset-source">
             <pre><span class="ruby-comment"># File lib/absorb_api/configuration.rb, line 14</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">reset</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">reset</span>
   <span class="ruby-ivar">@configuration</span> = <span class="ruby-constant">Configuration</span>.<span class="ruby-identifier">new</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-c-token" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">token</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="token-source">
+            <pre><span class="ruby-comment"># File lib/absorb_api.rb, line 42</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">token</span>
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">authorization</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Authorize</span>.<span class="ruby-identifier">new</span>
+
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">authorization</span>.<span class="ruby-identifier">token</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -293,7 +262,7 @@
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Generated by <a href="https://rdoc.github.io/rdoc">RDoc</a> 5.1.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
@@ -25,10 +26,26 @@
 <h2 id="pages">Pages</h2>
 <ul>
   <li class="file">
+    <a href="CODE_OF_CONDUCT_md.html">CODE_OF_CONDUCT</a>
+
+    <ul>
+      <li><a href="CODE_OF_CONDUCT_md.html#label-Contributor+Covenant+Code+of+Conduct">Contributor Covenant Code of Conduct</a>
+      <li><a href="CODE_OF_CONDUCT_md.html#label-Our+Pledge">Our Pledge</a>
+      <li><a href="CODE_OF_CONDUCT_md.html#label-Our+Standards">Our Standards</a>
+      <li><a href="CODE_OF_CONDUCT_md.html#label-Our+Responsibilities">Our Responsibilities</a>
+      <li><a href="CODE_OF_CONDUCT_md.html#label-Scope">Scope</a>
+      <li><a href="CODE_OF_CONDUCT_md.html#label-Enforcement">Enforcement</a>
+      <li><a href="CODE_OF_CONDUCT_md.html#label-Attribution">Attribution</a>
+    </ul>
+  </li>
+    <li class="file">
     <a href="Gemfile.html">Gemfile</a>
   </li>
     <li class="file">
     <a href="Gemfile_lock.html">Gemfile.lock</a>
+  </li>
+    <li class="file">
+    <a href="Icon.html">Icon</a>
   </li>
     <li class="file">
     <a href="LICENSE_txt.html">LICENSE</a>
@@ -80,7 +97,10 @@
     <a href="AbsorbApi.html">AbsorbApi</a>
   </li>
   <li class="class">
-    <a href="AbsorbApi/Base.html">AbsorbApi::Base</a>
+    <a href="AbsorbApi/Api.html">AbsorbApi::Api</a>
+  </li>
+  <li class="class">
+    <a href="AbsorbApi/Authorize.html">AbsorbApi::Authorize</a>
   </li>
   <li class="class">
     <a href="AbsorbApi/Category.html">AbsorbApi::Category</a>
@@ -103,6 +123,9 @@
   <li class="class">
     <a href="AbsorbApi/CourseEnrollment.html">AbsorbApi::CourseEnrollment</a>
   </li>
+  <li class="module">
+    <a href="AbsorbApi/Create.html">AbsorbApi::Create</a>
+  </li>
   <li class="class">
     <a href="AbsorbApi/Curriculum.html">AbsorbApi::Curriculum</a>
   </li>
@@ -115,14 +138,17 @@
   <li class="class">
     <a href="AbsorbApi/LessonEnrollment.html">AbsorbApi::LessonEnrollment</a>
   </li>
-  <li class="module">
-    <a href="AbsorbApi/Orm.html">AbsorbApi::Orm</a>
-  </li>
   <li class="class">
     <a href="AbsorbApi/Prerequisite.html">AbsorbApi::Prerequisite</a>
   </li>
+  <li class="class">
+    <a href="AbsorbApi/Record.html">AbsorbApi::Record</a>
+  </li>
   <li class="module">
     <a href="AbsorbApi/Relations.html">AbsorbApi::Relations</a>
+  </li>
+  <li class="module">
+    <a href="AbsorbApi/Relations/ClassMethods.html">AbsorbApi::Relations::ClassMethods</a>
   </li>
   <li class="class">
     <a href="AbsorbApi/Resource.html">AbsorbApi::Resource</a>
@@ -148,18 +174,34 @@
   <li class="class">
     <a href="AbsorbApi/ValidationError.html">AbsorbApi::ValidationError</a>
   </li>
+  <li class="module">
+    <a href="AbsorbApi/Where.html">AbsorbApi::Where</a>
+  </li>
+  <li class="class">
+    <a href="Object.html">Object</a>
+  </li>
 </ul>
 
 <h2 id="methods">Methods</h2>
 <ul>
 
   <li class="method">
-    <a href="AbsorbApi.html#method-c-api">::api</a>
+    <a href="AbsorbApi/Record.html#method-c-all">::all</a>
     &mdash;
-    <span class="container">AbsorbApi</span>
+    <span class="container">AbsorbApi::Record</span>
 
   <li class="method">
-    <a href="AbsorbApi.html#method-c-authorize">::authorize</a>
+    <a href="AbsorbApi/Record.html#method-c-can_create">::can_create</a>
+    &mdash;
+    <span class="container">AbsorbApi::Record</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Record.html#method-c-can_search">::can_search</a>
+    &mdash;
+    <span class="container">AbsorbApi::Record</span>
+
+  <li class="method">
+    <a href="AbsorbApi.html#method-c-configuration">::configuration</a>
     &mdash;
     <span class="container">AbsorbApi</span>
 
@@ -169,19 +211,9 @@
     <span class="container">AbsorbApi</span>
 
   <li class="method">
-    <a href="AbsorbApi/User.html#method-c-courses_from_collection">::courses_from_collection</a>
+    <a href="AbsorbApi/Record.html#method-c-find">::find</a>
     &mdash;
-    <span class="container">AbsorbApi::User</span>
-
-  <li class="method">
-    <a href="AbsorbApi/Course.html#method-c-enrollments_from_collection">::enrollments_from_collection</a>
-    &mdash;
-    <span class="container">AbsorbApi::Course</span>
-
-  <li class="method">
-    <a href="AbsorbApi/CourseEnrollment.html#method-c-lessons_from_collection">::lessons_from_collection</a>
-    &mdash;
-    <span class="container">AbsorbApi::CourseEnrollment</span>
+    <span class="container">AbsorbApi::Record</span>
 
   <li class="method">
     <a href="AbsorbApi/Collection.html#method-c-new">::new</a>
@@ -189,9 +221,14 @@
     <span class="container">AbsorbApi::Collection</span>
 
   <li class="method">
-    <a href="AbsorbApi/Base.html#method-c-new">::new</a>
+    <a href="AbsorbApi/Authorize.html#method-c-new">::new</a>
     &mdash;
-    <span class="container">AbsorbApi::Base</span>
+    <span class="container">AbsorbApi::Authorize</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Record.html#method-c-new">::new</a>
+    &mdash;
+    <span class="container">AbsorbApi::Record</span>
 
   <li class="method">
     <a href="AbsorbApi.html#method-c-reset">::reset</a>
@@ -199,29 +236,39 @@
     <span class="container">AbsorbApi</span>
 
   <li class="method">
-    <a href="AbsorbApi/Orm.html#method-i-all">#all</a>
+    <a href="AbsorbApi.html#method-c-token">::token</a>
     &mdash;
-    <span class="container">AbsorbApi::Orm</span>
+    <span class="container">AbsorbApi</span>
 
   <li class="method">
-    <a href="AbsorbApi/Relations.html#method-i-create">#create</a>
+    <a href="AbsorbApi/Record.html#method-c-with_relationships">::with_relationships</a>
     &mdash;
-    <span class="container">AbsorbApi::Relations</span>
+    <span class="container">AbsorbApi::Record</span>
 
   <li class="method">
-    <a href="AbsorbApi/Orm.html#method-i-find">#find</a>
+    <a href="AbsorbApi/Api.html#method-i-connection">#connection</a>
     &mdash;
-    <span class="container">AbsorbApi::Orm</span>
+    <span class="container">AbsorbApi::Api</span>
 
   <li class="method">
-    <a href="AbsorbApi/Relations.html#method-i-has_many">#has_many</a>
+    <a href="AbsorbApi/Create.html#method-i-create">#create</a>
     &mdash;
-    <span class="container">AbsorbApi::Relations</span>
+    <span class="container">AbsorbApi::Create</span>
 
   <li class="method">
-    <a href="AbsorbApi/Relations.html#method-i-has_one">#has_one</a>
+    <a href="AbsorbApi/Api.html#method-i-delete">#delete</a>
     &mdash;
-    <span class="container">AbsorbApi::Relations</span>
+    <span class="container">AbsorbApi::Api</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Authorize.html#method-i-expired-3F">#expired?</a>
+    &mdash;
+    <span class="container">AbsorbApi::Authorize</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Api.html#method-i-get">#get</a>
+    &mdash;
+    <span class="container">AbsorbApi::Api</span>
 
   <li class="method">
     <a href="AbsorbApi/CourseEnrollment.html#method-i-lessons">#lessons</a>
@@ -229,16 +276,56 @@
     <span class="container">AbsorbApi::CourseEnrollment</span>
 
   <li class="method">
-    <a href="AbsorbApi/Relations.html#method-i-where">#where</a>
+    <a href="AbsorbApi/Api.html#method-i-patch">#patch</a>
     &mdash;
-    <span class="container">AbsorbApi::Relations</span>
+    <span class="container">AbsorbApi::Api</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Api.html#method-i-post">#post</a>
+    &mdash;
+    <span class="container">AbsorbApi::Api</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Api.html#method-i-put">#put</a>
+    &mdash;
+    <span class="container">AbsorbApi::Api</span>
+
+  <li class="method">
+    <a href="Object.html#method-i-reload-21">#reload!</a>
+    &mdash;
+    <span class="container">Object</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Authorize.html#method-i-token">#token</a>
+    &mdash;
+    <span class="container">AbsorbApi::Authorize</span>
+
+  <li class="method">
+    <a href="AbsorbApi/User.html#method-i-update">#update</a>
+    &mdash;
+    <span class="container">AbsorbApi::User</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Where.html#method-i-where">#where</a>
+    &mdash;
+    <span class="container">AbsorbApi::Where</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Relations/ClassMethods.html#method-i-with_many">#with_many</a>
+    &mdash;
+    <span class="container">AbsorbApi::Relations::ClassMethods</span>
+
+  <li class="method">
+    <a href="AbsorbApi/Relations/ClassMethods.html#method-i-with_one">#with_one</a>
+    &mdash;
+    <span class="container">AbsorbApi::Relations::ClassMethods</span>
 </ul>
 </main>
 
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Generated by <a href="https://rdoc.github.io/rdoc">RDoc</a> 5.1.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

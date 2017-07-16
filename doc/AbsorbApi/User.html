@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "../";
+  var index_rel_prefix = "../";
 </script>
 
 <script src="../js/jquery.js"></script>
@@ -58,22 +59,11 @@
   <h3>Parent</h3>
 
   
-  <p class="link"><a href="Base.html">AbsorbApi::Base</a>
+  <p class="link"><a href="Record.html">AbsorbApi::Record</a>
   
 </div>
 
-    <div id="includes-section" class="nav-section">
-  <h3>Included Modules</h3>
-
-  <ul class="link-list">
-  
-  
-    <li><a class="include" href="Relations.html">AbsorbApi::Relations</a>
-  
-  
-  </ul>
-</div>
-
+    
     
     <!-- Method Quickref -->
 <div id="method-list-section" class="nav-section">
@@ -81,7 +71,7 @@
 
   <ul class="link-list" role="directory">
     
-    <li ><a href="#method-c-courses_from_collection">::courses_from_collection</a>
+    <li ><a href="#method-i-update">#update</a>
     
   </ul>
 </div>
@@ -222,6 +212,45 @@
       <div id="attribute-i-date_terminated" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">date_terminated</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-decimal1" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">decimal1</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-decimal2" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">decimal2</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-decimal3" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">decimal3</span><span
             class="attribute-access-type">[RW]</span>
         </div>
 
@@ -518,6 +547,32 @@
         </div>
       </div>
       
+      <div id="attribute-i-string1" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">string1</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-string2" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">string2</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
       <div id="attribute-i-supervisor_id" class="method-detail">
         <div class="method-heading attribute-method-heading">
           <span class="method-name">supervisor_id</span><span
@@ -548,17 +603,17 @@
     
 
     
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Class Methods</h3>
+         <h3>Public Instance Methods</h3>
        </header>
 
     
-      <div id="method-c-courses_from_collection" class="method-detail ">
+      <div id="method-i-update" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">courses_from_collection</span><span
-            class="method-args">(users)</span>
+          <span class="method-name">update</span><span
+            class="method-args">(attrs)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -567,25 +622,20 @@
 
         <div class="method-description">
           
-          <p>gets all associated courses given a collection of users all calls are
-called in parallel users are chunked in groups of 105 to keep typhoeus from
-getting bogged down</p>
+          
           
           
 
           
-          <div class="method-source-code" id="courses_from_collection-source">
-            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 15</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">courses_from_collection</span>(<span class="ruby-identifier">users</span>)
-  <span class="ruby-identifier">courses</span> = []
-  <span class="ruby-identifier">users</span>.<span class="ruby-identifier">each_slice</span>(<span class="ruby-value">105</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user_slice</span><span class="ruby-operator">|</span>
-    <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">in_parallel</span> <span class="ruby-keyword">do</span>
-      <span class="ruby-identifier">user_slice</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">user</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">courses</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">AbsorbApi</span>.<span class="ruby-identifier">api</span>.<span class="ruby-identifier">get</span>(<span class="ruby-node">&quot;users/#{user.id}/courses&quot;</span>)
-      <span class="ruby-keyword">end</span>
-    <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">end</span>
-  <span class="ruby-identifier">courses</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">response</span><span class="ruby-operator">|</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">body</span><span class="ruby-operator">|</span> <span class="ruby-constant">Course</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">body</span>) } }.<span class="ruby-identifier">flatten</span>
+          <div class="method-source-code" id="update-source">
+            <pre><span class="ruby-comment"># File lib/absorb_api/user.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">update</span>(<span class="ruby-identifier">attrs</span>)
+  <span class="ruby-identifier">attrs</span> = <span class="ruby-identifier">attrs</span>.<span class="ruby-identifier">with_indifferent_access</span>.<span class="ruby-identifier">transform_keys</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:camelize</span>)
+  <span class="ruby-identifier">attrs</span>[<span class="ruby-string">&quot;Username&quot;</span>] = <span class="ruby-identifier">username</span>
+
+  <span class="ruby-identifier">put</span>(<span class="ruby-node">&quot;users/#{id}&quot;</span>, <span class="ruby-identifier">attrs</span>)
+
+  <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -605,7 +655,7 @@ getting bogged down</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Generated by <a href="https://rdoc.github.io/rdoc">RDoc</a> 5.1.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 

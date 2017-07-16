@@ -8,6 +8,7 @@
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
 </script>
 
 <script src="./js/jquery.js"></script>
@@ -58,9 +59,13 @@
 
   <ul class="link-list">
   
+    <li><a href="./CODE_OF_CONDUCT_md.html">CODE_OF_CONDUCT</a>
+  
     <li><a href="./Gemfile.html">Gemfile</a>
   
     <li><a href="./Gemfile_lock.html">Gemfile.lock</a>
+  
+    <li><a href="./Icon.html">Icon</a>
   
     <li><a href="./LICENSE_txt.html">LICENSE</a>
   
@@ -80,8 +85,9 @@
 
 <main role="main" aria-label="Page absorb_api.gemspec">
 
-<p>lib = File.expand_path(&#39;../lib&#39;, __FILE__) $LOAD_PATH.unshift(lib)
-unless $LOAD_PATH.include?(lib) require &#39;absorb_api/version&#39;</p>
+<p>$LOAD_PATH.push File.expand_path(“../lib”, __FILE__)</p>
+
+<p>require “absorb_api/version”</p>
 
 <p>Gem::Specification.new do |spec|</p>
 
@@ -91,17 +97,28 @@ unless $LOAD_PATH.include?(lib) require &#39;absorb_api/version&#39;</p>
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">email</span>         = [<span class="ruby-string">&quot;npezza93@gmail.com&quot;</span>]
 
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">summary</span>       = <span class="ruby-string">&quot;API wrapper for Absorb LMS&quot;</span>
-<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">description</span>   = <span class="ruby-string">&quot;This gem provides a ruby wrapper for Absorb&#39;s Learning Management System API. \n\n&quot;</span>
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">description</span>   = <span class="ruby-string">&quot;This gem provides a ruby wrapper for Absorb&#39;s Learning&quot;</span>   <span class="ruby-string">&quot;Management System API.&quot;</span>
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">homepage</span>      = <span class="ruby-string">&quot;https://github.com/npezza93/absorb_api&quot;</span>
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">license</span>       = <span class="ruby-string">&quot;MIT&quot;</span>
 
-<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span>         = <span class="ruby-value">%x`git ls-files -z`</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\x0&quot;</span>).<span class="ruby-identifier">reject</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">%r{^(test|spec|features)/}</span>) }
-<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">bindir</span>        = <span class="ruby-string">&quot;exe&quot;</span>
-<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">executables</span>   = <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span>.<span class="ruby-identifier">grep</span>(<span class="ruby-regexp">%r{^exe/}</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">f</span>) }
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">files</span>         = <span class="ruby-value">%x`git ls-files -z`</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;\x0&quot;</span>).<span class="ruby-identifier">reject</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span>
+  <span class="ruby-identifier">f</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">%r{^(test|spec|features)/}</span>)
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">bindir</span>        = <span class="ruby-string">&quot;bin&quot;</span>
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">require_paths</span> = [<span class="ruby-string">&quot;lib&quot;</span>]
 
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_dependency</span> <span class="ruby-string">&quot;activemodel&quot;</span>
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_dependency</span> <span class="ruby-string">&quot;activesupport&quot;</span>
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_dependency</span> <span class="ruby-string">&quot;faraday&quot;</span>
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_dependency</span> <span class="ruby-string">&quot;faraday_middleware&quot;</span>
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_dependency</span> <span class="ruby-string">&quot;json&quot;</span>
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_dependency</span> <span class="ruby-string">&quot;typhoeus&quot;</span>
+
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_development_dependency</span> <span class="ruby-string">&quot;pry&quot;</span>
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_development_dependency</span> <span class="ruby-string">&quot;bundler&quot;</span>, <span class="ruby-string">&quot;~&gt; 1.11&quot;</span>
 <span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_development_dependency</span> <span class="ruby-string">&quot;rake&quot;</span>, <span class="ruby-string">&quot;~&gt; 10.0&quot;</span>
+<span class="ruby-identifier">spec</span>.<span class="ruby-identifier">add_development_dependency</span> <span class="ruby-string">&quot;rubocop&quot;</span>
 </pre>
 
 <p>end</p>
@@ -111,7 +128,7 @@ unless $LOAD_PATH.include?(lib) require &#39;absorb_api/version&#39;</p>
 
 <footer id="validator-badges" role="contentinfo">
   <p><a href="http://validator.w3.org/check/referer">Validate</a>
-  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Generated by <a href="https://rdoc.github.io/rdoc">RDoc</a> 5.1.0.
   <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
 </footer>
 
