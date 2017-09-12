@@ -11,7 +11,7 @@ module AbsorbApi
 
         attrs = object.as_json.transform_keys(&:camelize)
         response = api.post(to_s.demodulize.pluralize.to_s, attrs)
-        object.id = response.body["Id"]
+        object.id = response["Id"]
         object
       end
     end
