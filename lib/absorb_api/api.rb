@@ -7,13 +7,10 @@ module AbsorbApi
     delegate :get, :put, :patch, :post, :delete, to: :connection
 
     def connection
-      Faraday.new(
-        url: AbsorbApi.configuration.url,
-        parallel_manager: Typhoeus::Hydra.new(max_concurrency: 200)
-      ) do |faraday|
+      Faraday.new(url: AbsorbApi.configuration.url) do |faraday|
         faraday.request :json
         faraday.response :json, content_type: /\bjson$/
-        faraday.adapter :typhoeus
+        faraday.adapter Faraday.default_adapter
         faraday.headers = { "Authorization" => AbsorbApi.token }
       end
     end

@@ -32,7 +32,7 @@ module AbsorbApi
       Faraday.new(url: AbsorbApi.configuration.url) do |faraday|
         faraday.request :url_encoded
         faraday.response :logger
-        faraday.adapter :typhoeus
+        faraday.adapter Faraday.default_adapter
       end
     end
 

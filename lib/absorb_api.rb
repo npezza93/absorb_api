@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "faraday"
-require "typhoeus/adapters/faraday"
 require "json"
 require "faraday_middleware"
 require "active_support/all"
